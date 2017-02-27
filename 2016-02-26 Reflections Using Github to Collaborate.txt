@@ -1,0 +1,41 @@
+Today I worked on the third lesson in Udacity’s course on How to Use Git and Github for about three hours. Here are some reflections I wrote, which was part of the coursework.
+
+Question:
+When would you want to use a remote repository rather than keeping all your work local?
+
+Answer:
+1) Backing up your project files
+2) Uploading your project for feedback from others
+3) Collaborating on a project with others/making your project open source
+
+Question:
+Why might you want to always pull changes manually rather than 
+having Git automatically stay up-to-date with your remote repository?
+
+Answer:
+The user may later decide they don’t want the changes made on GitHub,
+so there would be no reason to pull changes yet.
+
+Question:
+Describe the differences between forks, clones, and branches. When would you use one instead of another?
+
+Answer:
+branch — a history of commits with the most recent one being at the end or “tip” of the branch.
+Branches are created when the user wants to work on something while not affecting.
+the production code.
+
+clone — copying a repository.
+Cloning is used when a user wants to copy a remote or local repository into another local repository.
+
+fork — copying a remote from another user into a new remote repository of the user.
+Used when you want the code from another user, while still crediting their work.
+
+Here are some Git commands I learned:
+
+git remote // no arguments, shows all current remotes
+git remote add [name used to refer to repo on GitHub ex: origin] [GitHub remote url]
+git remote -v // v stands for "verbose." shows existing remotes
+git push [remote to push change to] [branch to push]
+// ex. git push origin master
+git pull [remote to pull from] [branch to pull]
+// ex. git pull origin master
