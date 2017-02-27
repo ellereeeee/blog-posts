@@ -1,0 +1,31 @@
+On Friday I read YDKJS — this and Object protoypes for an hour, then worked on my blog for an hour.
+
+Reflections on Chapter 3: Objects.
+
+First, not everything in Javascript is an object. There are six primary types in JS, which are strings, numbers, booleans, null, undefined, and objects.
+
+Objects can have “sub-types,” such as functions or arrays. These are called complex primitives. This terminology is particularly confusing, because you would think they are a type of primitive, but they’re actually a type of object.
+
+There are also other object sub-types, called “Built-in” objects. These are actually functions that can be used as constructors, or a function called with the new operator. They make objects. Check out the code below:
+
+var strPrimitive = “I am a string”;
+
+typeof strPrimitive ; // string
+
+strPrimitive instanceof String; // false
+
+var strObject = new String(“I am a string”);
+
+typeof strObject = strObject; // object
+
+strObject instanceof String // true
+
+You can see here that strPrimitive is a primitive string, while strObject is an object.
+
+In the case of String objects, there is apparently little use for them except for the fact that you can store properties on them.
+
+It’s possible to iterate over the values (rather than properties or indices) in Javascript objects and arrays with the ES6 for… of syntax. Arrays have this function built-in, while a custom made one must be made for objects.
+
+links:
+https://github.com/getify/You-Dont-Know-JS/blob/master/this%20&%20object%20prototypes/README.md#you-dont-know-js-this--object-prototypes
+http://stackoverflow.com/questions/5750656/whats-the-point-of-new-stringx-in-javascript
