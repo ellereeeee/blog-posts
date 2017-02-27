@@ -1,0 +1,22 @@
+Welcome to my blog!
+
+My name is Richard. I’m a 26 year old American living and working in Busan, South Korea as a full-time ESL teacher.
+
+I love weight-lifting, playing video games, and listening to music. I can speak some Korean and Japanese and take way too many pictures of food.
+
+I started studying web development seriously in September 2016. Since then, I’ve followed the curriculum on Freecodecamp (in addition to some other resources), studying and coding about 20 hours a week. You can check out some of my projects on my Codepen.
+
+Once I made it to the advanced projects in Freecodecamp, I stopped and reevaluated my learning. I realized that I didn’t know how to use basic tools that web developers use, like coding locally and using Git.
+
+So, I decided to follow this comprehensive Web Development study guide made by Freecodecamp user P1xt. It was recommended in that guide to make a blog and write about you learned. I’ve heard this helps greatly in reinforcing material you’ve learned, and trying to wrap my head around Javascript objects in detail gave me the push to start this blog.
+
+The purpose of this blog is to help me further my learning in anything related to web-development. I intend for future posts to be very succinct reflections in what I’ve learned, like notes. The format of my posts may change, the style may change, and occasionally the content may change, so please excuse any inconsistencies.
+
+From here on out, I hope this blog will show me and others how I’ve progressed in my learning and encourage people to make writing reflections into a habit of their own.
+
+links:
+https://www.instagram.com/ellereeeee/
+https://www.freecodecamp.com/ellereeeee
+http://codepen.io/ellereeeee/#
+https://forum.freecodecamp.com/t/computer-guide-web-development-with-computer-science-foundations-comprehensive-path/64516
+https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch3.md
