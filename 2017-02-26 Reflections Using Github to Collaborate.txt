@@ -39,3 +39,6 @@ git push [remote to push change to] [branch to push]
 // ex. git push origin master
 git pull [remote to pull from] [branch to pull]
 // ex. git pull origin master
+
+links:
+https://classroom.udacity.com/courses/ud775/lessons/2980038599/concepts/29607789240923#
