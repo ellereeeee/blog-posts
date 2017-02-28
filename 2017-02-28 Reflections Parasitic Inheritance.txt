@@ -1,0 +1,79 @@
+Today I finished Ch. 4 — from YDKJS: this and Object prototypes.
+
+I don’t know if today was a bad day for me, but learning about parasitic inheritance kicked my butt today. I spent several hours just trying to wrap my head around it. You can me see asking for help (and getting some great answers) on Freecodecamp’s forum. If you also hard a hard time with this, check out my explanation below. I tried to break it down.
+
+// "Traditional JS Class" `Vehicle`
+function Vehicle() {
+    this.engines = 1;
+}
+Vehicle.prototype.ignition = function() {
+    console.log( "Turning on my engine." );
+};
+Vehicle.prototype.drive = function() {
+    this.ignition();
+    console.log( "Steering and moving forward!" );
+};
+
+// "Parasitic Class" `Car`
+function Car() {
+    // first, `car` is a `Vehicle`
+    var car = new Vehicle();
+
+    // now, let's modify our `car` to specialize it
+    car.wheels = 4;
+
+    // save a privileged reference to `Vehicle::drive()`
+    var vehDrive = car.drive;
+
+    // override `Vehicle::drive()`
+    car.drive = function() {
+        vehDrive.call( this );
+        console.log( "Rolling on all " + this.wheels + " wheels!" );
+    };
+
+    return car;
+}
+
+var myCar = new Car();
+
+myCar.drive();
+// Turning on my engine.
+// Steering and moving forward!
+// Rolling on all 4 wheels!
+
+First, we make a function at the top called Vehicle() and add methods to it (remember that function are objects). This mimics a parent class.
+
+Then, we make a function Car(). This functions copies everything from Vehicle() , but we should remember that functions cannot be copied in Javascript, just the references. True polymorphic behavior does not exist in JS!
+
+After that, we make modifications to Car()with car.wheels = 4.
+
+We then make the variable vehChar in var vehCar = car.drive; and rewrite car.drive at the bottom.
+
+Why do we need the variable vehCar? Well, if we rewrote car.drive like this:
+
+car.drive = function() {
+    car.drive.call( this );
+    console.log( "Rolling on all " + this.wheels + " wheels!" );
+};
+
+We’d have a messy recursive function on our hands.
+
+Okay, so then why don’t we just use Vehicle.prototype.drive.call(this) in place of vehCar? It’s less code, so surely it’s more elegant code, right?
+
+Nope. Do you remember the Principle of Least Privilege in YDKJS: Scope and Closures — Ch.3? It says we should expose only what is necessary and “hide” everything else.
+
+So, we make vehCar to prevent an unnecessary dependency on Vehicle(). vehCar copies the reference from the car.drive function, allowing us to retain the original function behavior when we rewrite car.drive with vehDrive.call(this).
+
+In case you needed a refresher for the use of this here, we are using an explicit this binding with the .call() method to ensure vehDrive() is executed in the context of Car() and nothing else. Check out Chapter 2.
+
+So to put this in a nutshell, parasitic inheritance is when a function takes data from one function and returns an object with data. Note that the new constructor is not necessary.
+
+Phew! What a mental workout. I’m sure I’m going to have to go back and edit this in the future. I think going away and coming back to this will be helpful in digesting the concepts behind this code . If you have any corrections or suggestions, please let me know.
+
+I’ll quickly finish this off with a note on Implicit Mixins. Basically, an implicit mixin is when one object’s method is executed in the context of another object with .call(this). It works, but it’s “brittle” because it’s entirely dependent on another object and gives no leeway for modification. It’s best to avoid using this when possible.
+
+links:
+https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch4.md
+https://forum.freecodecamp.com/t/questions-on-javascript-parasitic-inheritance/91948
+https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/ch3.md
+https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch2.md
