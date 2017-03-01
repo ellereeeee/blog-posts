@@ -1,16 +1,25 @@
 Second blog post today! I spent about 40 minutes working on the Udacity Git Course.
 
-I learned that whenever you make a push or pull request with Git, a local copy of the remote repository from GitHub is stored locally like this: remote-name/branch-name. Most of the time is looks like: origin/master.
+I learned that whenever you make a push or pull request with Git, a local copy of the remote repository from
+GitHub is stored locally like this: remote-name/branch-name. Most of the time is looks like: origin/master.
 
-When you use git status, you can see the differences between the local master branch and the local origin/master branch. If you made commits locally, but haven’t pushed those onto Git yet, that git status will say you’re ahead of the origin/master branch.
+When you use git status, you can see the differences between the local master branch and the 
+local origin/master branch. If you made commits locally, but haven’t pushed those onto Git yet, 
+that git status will say you’re ahead of the origin/master branch.
 
-Using the git fetch command will update the local origin/master branch, but not the local master branch. If we ran git status then, it would be possible for master to be behind origin/master, or to have conflicts in regards to commits.
+Using the git fetch command will update the local origin/master branch, but not the local master branch. 
+If we ran git status then, it would be possible for master to be behind origin/master, or to have conflicts 
+in regards to commits.
 
-We would use git merge -branch -branch to merge these two. If there’s a conflict, we would have to fix it, then git commit and finally git push.
+We would use git merge -branch -branch to merge these two. If there’s a conflict, we would have to fix it, 
+then git commit and finally git push.
 
 Running git fetch then git merge is the same thing as running git pull.
 
-One might wonder why we don’t make a merge commit message when we do git pull. If one commit is an ancestor of another, like this: commit A ← commit B, then we have something called a “fast-forward merge.” The commit A label is updated to the same place as the commit B label (the tip of the branch), rather than creating a commit with two parent commits.
+One might wonder why we don’t make a merge commit message when we do git pull. 
+If one commit is an ancestor of another, like this: commit A ← commit B, then we have something called 
+a “fast-forward merge.” The commit A label is updated to the same place as the 
+commit B label (the tip of the branch), rather than creating a commit with two parent commits.
 
 Remember that the branch that is checked out at the time of the merge is the label used for the final merged branch.
 
