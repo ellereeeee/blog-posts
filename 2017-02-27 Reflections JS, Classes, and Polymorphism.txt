@@ -1,24 +1,44 @@
-Today I spent about 3 hours on YDKJS — this and Object prototypes, reading through most of Chapter 4. Perhaps I studied a bit long, but I always try to understand everything thoroughly, typing out all the code and testing it. I also spent some time on the FCC forums.
+Today I spent about 3 hours on YDKJS — this and Object prototypes, reading through most of Chapter 4. 
+Perhaps I studied a bit long, but I always try to understand everything thoroughly, 
+typing out all the code and testing it. I also spent some time on the FCC forums.
 
-The first half of the chapter explained classes as a design pattern in object oriented programming. I had heard about classes when I tried learning Python basics a couple years ago, but Kyle Simpson really did an awesome job of explaining the concept thoroughly.
+The first half of the chapter explained classes as a design pattern in object oriented programming. 
+I had heard about classes when I tried learning Python basics a couple years ago, 
+but Kyle Simpson really did an awesome job of explaining the concept thoroughly.
 
 These are the main concepts covered: classes, instances, inheritance, and polymorphism.
 
-Classes are a blueprint of code. In real life, people make blueprints for planes, cars, or buildings; similarly, programmers make blueprints for things with code.
+Classes are a blueprint of code. In real life, people make blueprints for planes, cars, or buildings;
+similarly, programmers make blueprints for things with code.
 
-An instance is something constructed from a class. This is the important distinction; a class is a plan for something, and an instance of that class is that plan built into something. If you want to use the code you wrote in your class, you need to make an instance of the class.
+An instance is something constructed from a class. This is the important distinction; 
+a class is a plan for something, and an instance of that class is that plan built into something. 
+If you want to use the code you wrote in your class, you need to make an instance of the class.
 
-Inheritance is when a class is copied from another class. Copied is the important word; they are not linked. Also, if class B inherits class A, we could say class A is the parent class and class B is the child class.
+Inheritance is when a class is copied from another class. Copied is the important word; they are not linked. 
+Also, if class B inherits class A, we could say class A is the parent class and class B is the child class.
 
-Polymorphism is when an inherited class changes inherited behaviors from the parent class. For example, a method can be modified to include more data or run another function.
+Polymorphism is when an inherited class changes inherited behaviors from the parent class. 
+For example, a method can be modified to include more data or run another function.
 
-The second half of the chapter discusses how there are no classes in Javascript, and the different ways JS developers try to incorporate code that is similar to class behavior, but not quite. Simpson suggests that trying to implement class behavior in Javascript is usually not worth is because of the complexity it introduces.
+The second half of the chapter discusses how there are no classes in Javascript, 
+and the different ways JS developers try to incorporate code that is similar to class behavior, but not quite.
+Simpson suggests that trying to implement class behavior in Javascript is usually not worth it because of the complexity it introduces.
 
-Many people often confuse “Built-in” objects as classes, but they are actually functions called with the new operator that construct objects.
+Many people often confuse “Built-in” objects as classes, but they are actually functions 
+called with the new operator that construct objects.
 
-Simpson also discusses “Mixins,” which is a way developers try to mimic class behavior in Javascript. The name “mixin” comes from “mixed-in,” because a copy of a class is mixed-into a copy of another class. This mimics inheritance and polymorphism.
+Simpson also discusses “Mixins,” which is a way developers try to mimic class behavior in Javascript. 
+The name “mixin” comes from “mixed-in,” because a copy of a class is mixed-into a copy of another class. 
+This mimics inheritance and polymorphism.
 
-He covers two different kinds, explicit and implicit. In explicit, or as he says, explicit pseudo-polymorphism (what a mouthful!) is when a mixin function copies properties and functions from one class to another. In order to use functions from the “pseudo-parent class” (I made this up), an explicit binding of this is made onto the pseudo-parent function because functions cannot be copied in Javascript, only references to that function. If we didn’t do this, than the child-pseudo class would only run the method from the parent-pseudo class without any changes made in the child-pseudo class. I’ll cover implicit mixins tomorrow.
+He covers two different kinds, explicit and implicit. In explicit, or as he says, 
+explicit pseudo-polymorphism (what a mouthful!) is when a mixin function copies properties and functions 
+from one class to another. In order to use functions from the “pseudo-parent class” (I made this up), 
+an explicit binding of this is made onto the pseudo-parent function because functions cannot be copied in
+Javascript, only references to that function. If we didn’t do this, than the child-pseudo class would 
+only run the method from the parent-pseudo class without any changes made in the child-pseudo class. 
+I’ll cover implicit mixins tomorrow.
 
 I really enjoyed this chapter; Kyle Simpson did a great job of explaining concepts that seemed difficult to me.
 
