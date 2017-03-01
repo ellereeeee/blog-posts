@@ -1,4 +1,5 @@
-Today I worked on the third lesson in Udacity’s course on How to Use Git and Github for about three hours. Here are some reflections I wrote, which was part of the coursework.
+Today I worked on the third lesson in Udacity’s course on How to Use Git and Github for about three hours.
+Here are some reflections I wrote, which was part of the coursework.
 
 Question:
 When would you want to use a remote repository rather than keeping all your work local?
