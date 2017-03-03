@@ -1,0 +1,54 @@
+Yesterday I finished about half of Ch. 5 — YDKJS: this and Object Prototypes. 
+It introduced and explained the prototype chain, and discussed how many programmers try to force a class-based
+mindset of Javascript on themselves, even though classes do not exist in Javascript. Javascript also
+contributes to this mindset with operators like new , which resemble class constructors in class-based
+languages.
+
+All objects in JS have an internal property called [[Prototype]] , which is simply a reference to another
+object. It is given a non-null value at the time of creation.
+
+The [[Prototype]] mechanism is often referred to as a chain, which is a well-suited term. Imagine a chain, and
+at the bottom of the chain is the current object you’re dealing with. It is linked to the chain. Likewise,
+other objects may be linked to this chain until the end of the chain.
+
+Imagine a scenario where you make a property access on an object, but it does not exist on that object. The
+[[Prototype]] mechanism will traverse the chain. If it finds an object with that property, that property will
+be used. Note that it will be used, not added to the property you initially called. If that property does not
+exist on anything, the return result will be undefined.
+
+Understanding how setting properties on objects work when they exist higher on the [[Prototype]] chain is
+nuanced; I recommend you check the textbook if you need a refresher.
+
+Shadowing is when an object property exists on two objects on the [[Prototype]] chain. The object property on
+the lower part of the chain is the first to be accessed, and thus shadows the object property higher up on the
+[[Prototype]] chain.
+
+Kyle Simpson says shadowing with methods is more complicated than it’s worth because it leads to ugly explicit
+pseudo-polymorphism(taking a method from another object and forcing the context object with .call(this)).
+
+Simpson spends a good portion talking about class-centric misleading JS terminology. To sum up his point, he
+says Delegation is a better term than prototypal inheritance because inheritance does not exist and JS objects
+can delegate behavior to other objects higher on the [[Prototype]] chain.
+
+Also, there are no constructors in JS, only constructor calls. The new operator calls a function and creates
+an object as a side affect. Check out the code below:
+
+function NothingSpecial() {
+    console.log( "Don't mind me!" );
+}
+
+var a = new NothingSpecial();
+// "Don't mind me!"
+
+a; // {}
+
+Assigning new NothingSpecial(); logs “Don’t mind me!” to the console, while running a shows that it’s an empty
+object. You could use the this mechanism to get more leverage out of new, but if you want to link objects it
+would be better to use Object.create(..) , which Simpson will discuss later.
+
+This is unrelated, but I’ve decided to take out “Reflections” from my post titles since most of my posts will
+probably be reflections. Also, I’ve decided to take out how long it took me to do something. I keep track of
+my time spent studying in an Evernote file, so I’m trying to keep things from being redundant.
+
+links:
+https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch5.md
