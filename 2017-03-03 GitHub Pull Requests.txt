@@ -1,0 +1,26 @@
+Yesterday I learned about GitHub pull requests on Udacity’s course How to Use Git and GitHub.
+
+A pull request is not the same as a pull. A pull is when you download commits from GitHub to your local
+repository. A pull request is when you make a request to another GitHub user to merge a commit/commits you’ve
+pushed onto GitHub, into their repository. I think pull request is poorly worded; merge request would be more
+suitable.
+
+After you add, commit, and push your commit/s to GitHub, you can make a pull request. The creator of the master
+repository will receive a message. Through the pull request, they can see the changes you’ve made and give you
+comments, or merge the pull request into their repository.
+
+It’s recommended that your pull request is from a separate branch instead of the master, so that it’s easy to
+edit or scrap without changing the master branch.
+
+Here’s some reflections I wrote that is part of the coursework:
+
+Question: How would you collaborate without using Git or GitHub?
+What would be easier, and what would be harder?
+
+Answer: You could send the files to each other via e-mail, or keep all of your versions uploaded on a cloud
+service such as Dropbox. If the user wasn’t always making add, commit, push, and pull requests, then they may
+save some time. Collaborating might be more difficult because you would have tell your partner where you made
+changes, and you would to check if there are any conflicts, which Github does for you.
+
+links:
+https://classroom.udacity.com/courses/ud775/lessons/3105028581/concepts/30667589670923#
