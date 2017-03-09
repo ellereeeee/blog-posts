@@ -6,9 +6,9 @@ In this post I'm going to try to explain the thought process of someone from a c
 
 ### Classical (Prototypal) Object Oriented Code Design
 
-I'll be using and explaining examples from Chapter 6: Behavior Delegation of [_YDKJS - this and Object prototype](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md).
+I'll be using and explaining examples from Chapter 6: Behavior Delegation of [_YDKJS - this and Object prototype_](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md).
 
-Here is an implementation of what Simpson calls a "_classical (prototypal) object oriented style."
+Here is an implementation of what Simpson calls a "_classical (prototypal) object oriented style._"
 
 ```
 function Foo(who) {
@@ -106,7 +106,7 @@ Here's a more complex diagram that shows more things that are happening. Simpson
 
 I'll go over additions to this diagram that are absent in the previous simpler diagram.
 
-**`Function()`** is a function-object like **`Object()`. All functions in JavaScript can delegate to `Function()`. `Function()` has a prototype relationship to `call(), apply(), bind()` which are labeled as objects.
+**`Function()`** is a function-object like `Object()`. All functions in JavaScript can delegate to `Function()`. `Function()` has a prototype relationship to `call(), apply(), bind()` which are labeled as objects.
 
 **`call(), apply(), bind()`** are actually methods of `Function.prototype`, so they are accessible by all functions. `call(), apply(), bind()` has a constructor relationship to `Function()` because something like the first object that has `.constructor` on the `[[Prototype]]` chain in this situation starting from `call(), apply(), bind()` is `Function()`.
 
