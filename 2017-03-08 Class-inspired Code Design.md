@@ -6,7 +6,7 @@ In this post I'm going to try to explain the thought process of someone from a c
 
 ### Classical (Prototypal) Object Oriented Code Design
 
-I'll be using and explaining examples from Chapter 6: Behavior Delegation of [_YDKJS - this and Object prototype_](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md).
+I'll be using and explaining examples from Chapter 6: Behavior Delegation of [_YDKJS - this and Object prototypes_](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md).
 
 Here is an implementation of what Simpson calls a "_classical (prototypal) object oriented style._"
 
@@ -70,7 +70,7 @@ So, the OO programmer makes `function parentClassFoo`. Since this is a function,
 
 The OO programmer than uses the `new` operator to "instantiate" `childClassBar` into instances. Remember that true instantiation does not exist in JavaScript. Here, JS is only making objects linked to the prototype of `childClassBar`.
 
-If you're thinking "wow, this is really confusing and convoluted," then you're right. A big chunk of this [_YDKJS: this and Object prototypes_](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md) is explaining why this is not good design for JavaScript, and you can see above why.
+If you're thinking "wow, this is really confusing and convoluted," then you're right. A big chunk of this [_YDKJS: this and Object prototypes_](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md) is explaining why this is not good design for JavaScript, and you can see why above.
 
 ### Mental Mapping this Approach
 
@@ -82,7 +82,7 @@ That said, **it is important to understand what is happening**. Simpson tries to
 
 Note that this corresponds to the first code block above; the one taken straight from the text. I'll try to explain things in order that they appeared in the code, and the relationship arrows that point away from the item of discussion.
 
-First, we have **`Foo()`**. You can see in the legend in the function, although this is supposed to emulate a class in the code. It has a property/relationship arrow labeled `.prototype` pointing to `identify()`. This means `Foo()` has a relationship to `identify()` because `identify()` is a method that exists on `Foo.prototype`.
+First, we have **`Foo()`**. You can see in the legend that it's a function, although this is supposed to emulate a class in the code. It has a property/relationship arrow labeled `.prototype` pointing to `identify()`. This means `Foo()` has a relationship to `identify()` because `identify()` is a method that exists on `Foo.prototype`.
 
 Let's move onto **`identify()`**. It has a relationship arrow labeled `.__proto__ [[Prototype]]` pointings towards `toString(), valueOf(), hasOwnProperty(),l isPrototypeOf()`. The relationship label is a bit confusing. It looks like `[[Prototype]]` just means the `[[Prototype]]` chain, but `.__proto__` is a bit of a separate concept. Remember that it's a getter/setter that exists on `Object.prototype`, along with `toString, valueOf()`, etc. It allows you to inspect the prototype of an object, or travel the prototype chain. So, _you could think of this relationship as just the `[[Prototype]]` chain_.
 
@@ -92,7 +92,7 @@ Let's move onto **`identify()`**. It has a relationship arrow labeled `.__proto_
 
 Alright, this is confusing. The `.constructor` property _does not mean constructed by ".."_ in JavaScript. It is an arbitrary property that by default is a reference to the object property. It can be overridden. 
 
-`speak()` exists on `Bar.prototype`. `Bar.prototype` was linked to `Foo.prototype` via `Object.create(..)`. Because the original `Bar.prototype` was overwritten with the new object, it lost it's default `.constructor` property. so it is delegated up to `Foo.prototype`, where it exists and points to `Foo`. If you ran `Bar.prototype.constructor` in the console, you would get `function Foo(who) {this.me = who;}`.  Wow, what a mental workout. Check out ["Constructor Redux"](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch5.md) in Chapter 5 for more details.
+`speak()` exists on `Bar.prototype`. `Bar.prototype` was linked to `Foo.prototype` via `Object.create(..)`. Because the original `Bar.prototype` was overwritten with the new object, it lost it's default `.constructor` property. So `Bar.prototype.constructor`(which _would_ exist in the same place as `speak()`) is delegated up to `Foo.prototype`, where `.constructor` exists and points to `Foo`. If you ran `Bar.prototype.constructor` in the console, you would get `function Foo(who) {this.me = who;}`.  Wow, what a mental workout. Check out ["Constructor Redux"](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch5.md) in Chapter 5 for more details.
 
 **`b1`** is an instance of `Bar()`. It has a `[[Prototype]]` relationship to speak(), meaning that `b1` delegates to `Bar.prototype`. `b1` has a dotted constructor relationpship to `Foo()` because like it is the next thing on the `[[Prototype]]` chain that has the `.constructor` property. **`b2`** is the same as `b1`.
 
@@ -106,8 +106,31 @@ Here's a more complex diagram that shows more things that are happening. Simpson
 
 I'll go over additions to this diagram that are absent in the previous simpler diagram.
 
-**`Function()`** is a function-object like `Object()`. All functions in JavaScript can delegate to `Function()`. `Function()` has a prototype relationship to `call(), apply(), bind()` which are labeled as objects.
+**`Function()`** is the `global Function` object. Taken from [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function):
 
-**`call(), apply(), bind()`** are actually methods of `Function.prototype`, so they are accessible by all functions. `call(), apply(), bind()` has a constructor relationship to `Function()` because something like the first object that has `.constructor` on the `[[Prototype]]` chain in this situation starting from `call(), apply(), bind()` is `Function()`.
+>The global Function object has no methods or properties of its own, however, since it is a function itself it does inherit some methods and properties through the prototype chain from Function.prototype.
 
-Everything else is that new are relationship arrows on things that were on the first diagram.
+**`Function()`** has a prototype relationship to `call(), apply(), bind()` which are labeled as functions. `Function()` also has a `[[Prototype]]` relationship. I'm going to make a note on this later; I don't understand what's happening here.
+
+**`call(), apply(), bind()`** are methods of `Function.prototype` that all functions in JavaScript can delegate to. `call(), apply(), bind()` has a constructor relationship to `Function()` because the first object that has `.constructor` on the `[[Prototype]]` chain in this situation starting from `call(), apply(), bind()` is `Function()`. `call(), apply(), bind()` has a `[[Prototype]]` relationship to `toString(), valueOf()` etc. because the `global Function` object is an object, so that means it  can delegate to the methods of `Object.prototype`.
+
+Everything else that is new are relationship arrows on things that were on the first diagram.
+
+Both `Foo()` and `Bar()` have a `[[Prototype]]` relationship to `call(), apply(), bind()` because all functions can delegate to the `global Function` object. `Foo()` and `Bar()` also have a `.constructor` relationship to `Function()`. Since neither `Foo()` nor `Bar()` have the `.constructor` property, it delegates this property to the `global Function` object. _Do not confuse `Foo()` with `Foo.prototype`. They are not the same objects!!!_ `Foo.constructor` refers to the `global Function` object, while `Foo.prototype.constructor` refers to `Foo()`.
+
+The global function object `Object()` also has a constructor relationship to the `global Function` object. `Object()` also has a `.__proto__` relationship to `call(), apply(), bind()` because `Object()` is a function object; therefore, it delegates to these behaviors. 
+
+**Note:** The relationship between `Object()` and `Function()` seems to be cyclic since their `[[Prototype]]` chain loops through each other. They are both global function-objects.
+
+### The Takeaway and Some Thoughts
+
+This is what you should takeaway from this:
+
+1) Using class-inspired code design is confusing and convoluted
+
+2) Although the internal mechanisms of JavaScript are complex, they are consistent and thus comprehendable.
+
+In my next post, I'm going to go over a code design approach that is much more sensible and simpler given JavaScript's prototype-based nature.
+
+Wow, this was one tough mental exercise. The book actually shows the more complex diagram first, and to be honest it was really intimidating. Trying to explaing everything that's happening definitely helped my understanding. That said, there's stll one thing I don't understand: why is there a `.__proto__ / [[Prototype]]` relationship going from the `global Function` object to its methods like `call(), apply(), bind()` on the complex diagram? Up until now I thought that relationship represented the path/direction of the `[[Protoype]]` chain, which exists on the `.prototype` property. I'm not sure now. I asked for some help on the [Freecodecamp forums](https://forum.freecodecamp.com/t/question-on-the-global-function-object-and-the-prototype-chain/95299) and I'll update this once I get an answer.
+
