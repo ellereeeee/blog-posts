@@ -35,7 +35,9 @@ This is simple code that leverages the `[[Prototype]]` mechanism.
 
 Here is a mental map of the code:
 
-![a diagram of OLOO-style code](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/fig6.png). Compare this with [class-inspired diagram](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/fig4.png). One of my friends (not studying code) saw it and asked me if I was studying electrical engineering...
+![a diagram of OLOO-style code](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/fig6.png). Compare this with [class-inspired diagram](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/fig4.png)
+
+One of my friends (not studying code) saw it and asked me if I was studying electrical engineering...
 
 Simpson spends a good portion of Ch. 6 showing in plausible real life examples of code where OLOO (objects linked to other objects) style code would be better than classical OO(object-oriented, or class-inspired) style code. In one example, he cleverly shows that using OO style code would require three "classes," but OLOO style code would only require two objects.
 
