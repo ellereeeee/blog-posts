@@ -134,4 +134,10 @@ In my next post, I'm going to go over a code design approach that is much more s
 
 Wow, this was one tough mental exercise. The book actually shows the more complex diagram first, and to be honest it was really intimidating. Trying to explain everything that's happening definitely helped my understanding. That said, there's stll one thing I don't understand: why is there a `.__proto__ / [[Prototype]]` relationship going from the `global Function` object to its methods like `call(), apply(), bind()` on the complex diagram? Up until now I thought that relationship represented the path/direction of the `[[Protoype]]` chain, which exists on the `.prototype` property. I'm not sure now. I asked for some help on the [Freecodecamp forums](https://forum.freecodecamp.com/t/question-on-the-global-function-object-and-the-prototype-chain/95299) and I'll update this once I get an answer.
 
-**edit:** I got a good answer from the FCC forums that explains my confusion above. All funcions can delegate to the `global Function` methods `call(), apply(), bind()`. That's why there is a `.__proto__ / [[Prototype]]` relationship arrow from `Function()` to `call(), apply(), bind().` It's sort of recursive in this aspct.
+**edit:** I got a good answer from the FCC forums that explains my confusion above. All funcions can delegate to the `global Function` methods `call(), apply(), bind()`. That's why there is a `.__proto__ / [[Prototype]]` relationship arrow from `Function()` to `call(), apply(), bind().` It's sort of recursive in this aspect.
+
+**edit 2:** Got another answer that explains it succinctly. This is taken from the lastest ECMAScript specification:
+
+> 19.2.2 Properties of the Function Constructor
+>
+>The Function constructor is itself a built-in function object. The value of the [[Prototype]] internal slot of the Function constructor is the intrinsic object %FunctionPrototype%.
