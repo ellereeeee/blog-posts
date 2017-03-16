@@ -2,7 +2,7 @@
 
 I finally finished [_YDKJS: this and Object prototypes_](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md). In this post I'll briefly go over why writing code that leverages the [[Prototype]] mechanism is simpler than using class-inspired code. I'll also summarize the rest of Ch. 6 and Appendix A.
 
-Check out this code from [Ch. 6: Behavior Delegation](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md)
+Check out this code from [Ch. 6: Behavior Delegation](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch6.md).
 
 ```javascript
 var Foo = {
@@ -35,7 +35,7 @@ This is simple code that leverages the `[[Prototype]]` mechanism.
 
 Here is a mental map of the code:
 
-![a diagram of OLOO-style code](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/fig6.png). Compare this with [class-inspired diagram](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/fig4.png)
+![a diagram of OLOO-style code](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/fig6.png). Compare this with this [class-inspired diagram](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/fig4.png).
 
 One of my friends (not studying code) saw it and asked me if I was studying electrical engineering...
 
