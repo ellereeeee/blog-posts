@@ -6,11 +6,11 @@ Here are my notes on "What is Scope?," Kyle Simpson's first chapter of [_You Don
 
 Kyle Simpson defines scope as _a well defined set of rules for storing variables in some location, and for finding those variables at a later time._
 
-Despite the fact that Javascript is often labeled as a "dynamic" or "interpreted" language, it is actually a compiled language. Understanding this is necessary to understand scope in JavaScript.
+Despite the fact that JavaScript is often labeled as a "dynamic" or "interpreted" language, it is actually a compiled language. Understanding this is necessary to understand scope in JavaScript.
 
 In a nutshell, compilation consists of three steps before code is executed.
 
-1) *Tokenizing/Lexing* - Code is broken down into meaningful chucks, aka "tokens." For example, in 
+1) *Tokenizing/Lexing* - Code is broken down into meaningful chunks, aka "tokens." For example, in 
 
    `var a = 2`, 
 
@@ -61,9 +61,9 @@ From the start of execution:
 
 6) RHS look up for `a` on line 3. Found in line 1.
 
-7) LHS look up for `c` varible on line 6 when assigning `foo(2)`
+7) LHS look up for `c` varible on line 6 when assigning `foo(2)`.
 
-The flow of execution starts at assigning the variable `2` to `foo(a)`, executing that function, then assinging the result (`4`) to `var c`.
+The flow of execution starts at assigning the variable `2` to `foo(a)`, executing that function, then assigning the result (`4`) to `var c`.
 
 ###Nested Scope###
 
