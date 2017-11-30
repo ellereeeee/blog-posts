@@ -1,3 +1,5 @@
+Here are my notes on "What is Scope?," Kyle Simpson's first chapter of [_You Don't Know Javascript: Scope and Closures_](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/ch1.md).
+
 ###The Compilation Process and Scope###
 
 Kyle Simpson defines scope as _a well defined set of rules for storing variables in some location, and for finding those variables at a later time._
