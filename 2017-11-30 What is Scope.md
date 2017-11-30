@@ -1,3 +1,5 @@
+![Header image](pictures/2017-11-30 What is Scope header.jpg)
+
 Here are my notes on "What is Scope?," Kyle Simpson's first chapter of [_You Don't Know Javascript: Scope and Closures_](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/ch1.md).
 
 ###The Compilation Process and Scope###
