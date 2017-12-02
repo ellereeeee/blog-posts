@@ -42,4 +42,4 @@ Two mechanisms in JavaScript can "cheat" lexical scope.
 
 `with` creates a whole new lexical scope by treating an object reference as a scope and the objects properties as identifiers within that scope.
 
-Using either of these defeats JavaScripts optimizations because the optimizations are based on knowing where and how all identifiers are declared at lex-time, and thus predict how they will be looked up during execution. Because `eval()` and `with` dynamically change scope, JavaScript cannot assume a settled scope and thus does not use the optimizations. As a result code runs slower with `eval()` or `with`. Do not use them!
+Using either of these defeats JavaScript's optimizations because the optimizations are based on knowing where and how all identifiers are declared at lex-time, and thus predict how they will be looked up during execution. Because `eval()` and `with` dynamically change scope, JavaScript cannot assume a settled scope and thus does not use the optimizations. As a result code runs slower with `eval()` or `with`. Do not use them!
