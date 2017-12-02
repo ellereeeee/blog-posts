@@ -31,3 +31,13 @@ If you needed to access the global `a` in an inner scope (i.e. not the global sc
 This behavior illustrates that scope only applies to first-class identifiers, such as a variable `a`, `b`, or `c`. In something like `foo.bar`, scope would apply to `foo`, then object-property access rules would take over.
 
 The main thing to know is that **lexical scope is only defined by where the function was declared**.
+
+###Cheating Lexical###
+
+Two mechanisms in JavaScript can "cheat" lexical scope.
+
+`eval()` can modify existing lexical scope at runtime by evaluating a string of code which has one or more declarations in it.
+
+`with` creates a whole new lexical scope by treating an object reference as a scope and the objects properties as identifiers within that scope.
+
+Using either of these defeats JavaScripts optimizations because the optimizations are based on knowing where and how all identifiers are declared at lex-time, and thus predict how they will be looked up during execution. Because `eval()` and `with` dynamically change scope, JavaScript cannot assume a settled scope and thus does not use the optimizations. As a result code runs slower with `eval()` or `with`. Do not use them!
