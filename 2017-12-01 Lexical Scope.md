@@ -1,3 +1,5 @@
+![Picture of laptop and coffeee](pictures/2017-12-01 Lexical Scope header.jpg)
+
 Here are my notes on "Lexical Scope," Kyle Simpson's [second chapter](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/ch2.md) of _You Don't Know Javascript: Scope and Closures_
 
 ###Lex-time###
