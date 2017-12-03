@@ -54,9 +54,9 @@ doSomething(2); // 15
 
 If you have to use identifiers with the same name in different layers of scope, be sure to declare them with `var`, otherwise they might collide, be overwritten and cause undesirable results.
 
-"Dependency managers" are tools used in modules that can help prevent colliding scope, but you can achievement the same result without these if you code defensively.
+"Dependency managers" are tools used in modules that can help prevent colliding scope, but you can achieve the same result without these if you code defensively.
 
-Since variable collision often occurs in the global scope, you could do what many libraries do and create a unique name, typically for an object, and write all the functionalities in the from of properties and methods for that uniquely-named object.
+Since variable collision often occurs in the global scope, you could do what many libraries do and create a unique name, typically for an object, and write all the functionalities in the form of properties and methods for that uniquely-named object.
 
 ###Functions As Scopes###
 
@@ -66,7 +66,7 @@ It's good practice to name functions. Anonymous functions (functions not-named) 
 
 1) Anonymous functions have no name in stack traces, making debugging difficult.
 
-2) Difficult when you need the function for something like recursion. The deprecated `argumenst.callee` reference is required.
+2) Difficult when you need to self-reference the function for something like recursion. The deprecated `arguments.callee` reference is required.
 
 3) Descriptive names help self-document code.
 
@@ -82,7 +82,7 @@ In ES6, the `let` keyword (a cousin to the `var ` keyword) is introduced to allo
 
 `const` does the same, except the value cannot be changed after it is first declared.
 
-Writing explicit blocks of code help in maintaining the readibilty of code and can help if someone needs to refactor the code later. Here is an example:
+Writing explicit blocks of code help in maintaining the readabilty of code and can help if someone needs to refactor the code later. Here is an example:
 
 ```
 var foo = true;
@@ -100,4 +100,4 @@ console.log( bar ); // ReferenceError
 
 Putting identifiers that you do not need to keep in blocks of code help with "garbage collection," or letting large-memory identifiers be recycled and have memory be reallocated to something else.
 
-Function-scope and block-scope should be used to achieve better, more readable/maintanable code.
+Function-scope and block-scope should be used to achieve better, more readable/maintainable code.
