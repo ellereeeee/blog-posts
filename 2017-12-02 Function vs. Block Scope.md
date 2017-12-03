@@ -2,7 +2,7 @@
 
 Here are my notes on "Function vs. Block Scope," Kyle Simpson's [third chapter](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/ch3.md) of _You Don't Know Javascript: Scope and Closures_.
 
-###Scope From Functions###
+### Scope From Functions
 
 Functions create scope.
 
@@ -72,7 +72,7 @@ It's good practice to name functions. Anonymous functions (functions not-named) 
 
 Inline function expressions are useful.
 
-###Blocks As Scopes###
+### Blocks As Scopes
 
 Block-scope refers to the idea that variables and functions can belong to an arbitrary block of code, rather than an enclosing function.
 

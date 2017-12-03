@@ -2,7 +2,7 @@
 
 Here are my notes on "Lexical Scope," Kyle Simpson's [second chapter](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/ch2.md) of _You Don't Know Javascript: Scope and Closures_.
 
-###Lex-time###
+### Lex-time###
 
 Lexical scope is scope defined at lexing time. JavaScript has lexical scope. In other words, scope is set in stone when variables, functions, and blocks of code are written and processed by the lexer.
 
@@ -34,7 +34,7 @@ This behavior illustrates that scope only applies to first-class identifiers, su
 
 The main thing to know is that **lexical scope is only defined by where the function was declared**.
 
-###Cheating Lexical###
+### Cheating Lexical###
 
 Two mechanisms in JavaScript can "cheat" lexical scope.
 

@@ -2,7 +2,7 @@
 
 Here are my notes on "What is Scope?," Kyle Simpson's first chapter of [_You Don't Know Javascript: Scope and Closures_](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/ch1.md).
 
-###The Compilation Process and Scope###
+### The Compilation Process and Scope
 
 Kyle Simpson defines scope as _a well defined set of rules for storing variables in some location, and for finding those variables at a later time._
 
@@ -22,7 +22,7 @@ In a nutshell, compilation consists of three steps before code is executed.
 
 Code is not executed in those three steps. Code in JavaScript is usually executed immediately after.
 
-###Understanding Scope###
+### Understanding Scope
 
 There are three main "players" involved when understanding scope.
 
@@ -65,7 +65,7 @@ From the start of execution:
 
 The flow of execution starts at assigning the variable `2` to `foo(a)`, executing that function, then assigning the result (`4`) to `var c`.
 
-###Nested Scope###
+### Nested Scope
 
 When a LHS or RHS look-up is made, the engine looks for the reference in the current scope (which is either a block of code or a function). If it's not present, it then searches the next outer scope and continues until it either finds the reference or the global scope is reached.
 
@@ -83,7 +83,7 @@ foo( 2 ); // 4
 
 The RHS reference for `b` is resolved not in the `foo` function but in the outer (global, in this case) scope.
 
-###Errors###
+### Errors
 
 When not in strict mode, LHS and RHS look-ups have different results when a reference is not found. Failed RHS look-ups throw a `ReferenceError`. The global scope implicitly creates a variable during a failed LHS look-up.
 
