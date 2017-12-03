@@ -1,3 +1,5 @@
+![A dark picture of a macbook with code on the screen.](pictures/2017-12-02 Function vs. Block Scope header.jpg)
+
 Here are my notes on "Function vs. Block Scope," Kyle Simpson's [third chapter](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/ch3.md) of _You Don't Know Javascript: Scope and Closures_.
 
 ###Scope From Functions###
