@@ -26,7 +26,7 @@ function foo(a) {
 
 `a`, `b`, `c`, and the `bar()` identifiers all belong too `foo`'s scope. They are also accessible to the nested scope of `bar`, unless there are shadowing variables in `bar`'s scope. You cannot access `foo`'s identifiers in the global scope. `console.log(a);` throws a `ReferenceError`.
 
-###Hiding In Plain Scope###
+### Hiding In Plain Scope
 
 One useful technique to avoid identifiers being overwritten or colliding with each other is to wrap a scope in another scope, such as wrapping a function in another function.
 
@@ -58,7 +58,7 @@ If you have to use identifiers with the same name in different layers of scope, 
 
 Since variable collision often occurs in the global scope, you could do what many libraries do and create a unique name, typically for an object, and write all the functionalities in the form of properties and methods for that uniquely-named object.
 
-###Functions As Scopes###
+### Functions As Scopes
 
 Sometimes function identifiers can "pollute" the global scope when they're only needed once. Immediately Invoked Function Expressions (IIFEs) are good to use in these situations. IIFEs are only bound to their own scope.
 
