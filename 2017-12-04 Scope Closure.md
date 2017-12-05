@@ -27,3 +27,24 @@ Here we can see that the lexical scope of bar is accessed outside of its own lex
 Since JavaScript's engine gets ride of code in order to reallocate memory efficiently (called the "Garbage Collector" by Simpson), one might expect the inner scope of `foo()` to be gone after it's no longer in use. However, it remains because `bar()` has a closure over the scope of `foo()`. `baz` has access to author-time lexical scope.
 
 Regardless of _how_ we transport an inner function outside of its lexical scope, it will maintain a scope reference to where it was declared and exercise that closure when executed.
+
+### Now I Can See
+
+Closure is common when you pass functions around, such as in event handlers, Ajax requests, or callback functions.
+
+For example:
+
+```javascript
+function wait(message) {
+
+  setTimeout(function timer() {
+    console.log(message);
+  }, 1000);
+  
+}
+
+wait("Hello, closure!");
+```
+We are executing `timer` outside of its scope, and `timer` can access the `message` variable because of its closure over `timer`.
+
+Simpson says IIFEs aren't examples of closure because they are not executed outside of its own lexical scope, but it can be a common tool to create scope that can be closed over. IIFEs still create scope.
