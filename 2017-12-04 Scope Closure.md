@@ -48,3 +48,49 @@ wait("Hello, closure!");
 We are executing `timer` outside of its scope, and `timer` can access the `message` variable because of its closure over `timer`.
 
 Simpson says IIFEs aren't examples of closure because they are not executed outside of its own lexical scope, but it can be a common tool to create scope that can be closed over. IIFEs still create scope.
+
+### Loops + Closure
+
+Some might expect `1`, `2`, `3`, `4`, and `5` to be printed from the following code:
+
+```javascript
+for (var i=1; i<=5; i++) {
+  setTimeout( function timer(){
+    console.log( i );
+  }, i*1000);
+}
+```
+However, we get `6` printed five times.
+
+This is because the loop is finished long before 1 second. Even if we set the timer to 0, the for loop would still finish first and we would get the same result.
+
+The issue is that the author of that code is implying that each iteration has its own copy of `i`. It does not; there is only one `i` in the global scope.
+
+The following code would remedy this:
+
+```javascript
+for (var i=1; i<=5; i++) {
+  (function(){
+    var j = i;
+      setTimeout(function timer(){
+        console.log(j);
+      }, j*1000);
+  })();
+}
+```
+From this code we see we need two things: block scope and closure.
+
+The IIFE gives each iteration its own scope and the `j` variable gives each iteration its own value.
+
+The `let` identifier introduced in ES6 lets us accomplish the same result elegantly. The following code gives the same result:
+
+
+```
+for (let i=1; i<=5; i++) {
+  setTimeout(function timer() {
+    console.log(i);
+  }, i*1000);
+}
+```
+
+`let` creates block scope from the `for` block. `let` also has a special characteristic where it is reassigned each iteration when it is declared in the header of a `for` loop, so it creates a new scope each iteration and a different variable for each respective scope/iteration. Just like that, `let` accomplishes both block scope and closure.
