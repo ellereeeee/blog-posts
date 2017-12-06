@@ -127,11 +127,11 @@ foo.doAnother(); // 1 ! 2 ! 3
 ```
 `CoolModule()` is a function that creates scope (and inner scopes and closures) when it is invoked. It is invoked when it is assigned to the `foo` variable.
 
-`CoolModule()` returns an object, which are references to inner functions. The inner variables are kept private. It's appropriate to think of the object as a public API for the module.
+`CoolModule()` returns an object, which are references to inner functions. The inner variables are kept private. Think of the object as a public API for the module.
 
 There are two requriements for the module pattern:
 
-1) There must be an enclosing outer function, and it must be invoked at least once (each time a new module instance is created, like assigning the outer function to a variable
+1) There must be an enclosing outer function, and it must be invoked at least once (each time a new module instance is created, like assigning the outer function to a variable).
 
 2) The enclosing function must have at least one inner function that can access and/or modify a private state (such as changing a private variable).
 
@@ -285,7 +285,7 @@ console.log(
 );
 ```
 
-`module` imports an entire module API to a bound variable (importing the bar module to the bar variable above).
+`module` imports an entire module API to a bound variable (importing the bar module to the `bar` variable above).
 
 Let's see how we import certain parts of another API:
 
@@ -303,7 +303,7 @@ function awesome() {
 
 export awesome;
 ```
-Here we only import `hello()` from the bar module. Note that `hello()` is the only thing in bar's API. If there were other parts, but we imported `hello()`, we would only have access to `hello()` in foo.js. This is similar to the dependencies created by module managers we discussed previously.
+Here we only import `hello()` from the bar module. Note that `hello()` is the only thing in bar's API. If there were other parts and still only imported `hello()`, we would only have access to `hello()` in foo.js. This is similar to the dependencies created by module managers we discussed previously, except dependencies import a whole module to another.
 
 Note that `import` and `export` can be used as many times as necessary in a module's definition.
 
