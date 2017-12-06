@@ -45,3 +45,5 @@ bar();
 `3` is printed because `foo()` was called from `bar()`, where it checks for variables in the `bar()` scope and finds the `a` variable with the value of `3`.
 
 Note again that this is a theoretical illustration to help us understand lexical scope. JavaScript has lexical scope!
+
+As a side note, `this` is related to dynamic scope because it cares on how a function was called.
