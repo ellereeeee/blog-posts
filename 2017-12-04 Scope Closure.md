@@ -131,7 +131,7 @@ foo.doAnother(); // 1 ! 2 ! 3
 
 `CoolModule()` returns an object, which are references to inner functions. The inner variables are kept private. Think of the object as a public API for the module.
 
-There are two requriements for the module pattern:
+There are two requirements for the module pattern:
 
 1) There must be an enclosing outer function, and it must be invoked at least once (each time a new module instance is created, like assigning the outer function to a variable).
 
@@ -162,7 +162,7 @@ var foo2 = CoolModule("foo 2");
 foo1.identify(); // "foo 1"
 foo2.identify(); // "foo 2"
 ```
-You can also change the state of the public API by having a reference to it in your inner functions (via object property access to the publicAPI).
+You can also change the state of the public API by having a reference to it in your inner functions (via object property access to the public API).
 
 For example:
 
