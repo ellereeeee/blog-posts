@@ -260,4 +260,53 @@ foo.awesome(); // LET ME INTRODUCE: HIPPO
 
 `define()` creates new modules that are stored in the private variable `modules`. We use the `get()` function of the `MyModules` variable and instantiate new modules (`bar` and `foo`). Again, the main point is that modules produced by module managers are not different than any other module.
 
+ES6 adds first-class syntax for modules. Each module is treated as a separate JavaScript file. Modules can also import other modules, import specific API members, or export their own API members.
 
+Here is an example of this syntax:
+
+```javascript
+// this file is titled "bar.js"
+function hello(who) {
+  return "Let me introduce: " + who;
+}
+
+export hello;
+```
+
+`export` exports an identifier (a variable or function) to the public API for that module. This is similar to the return object seen in the previously discussed function modules.
+
+Here we import the entire "foo" module:
+
+```javascript
+module bar from "bar";
+
+console.log(
+  bar.hello("rhino") // Let me introduce: rhino
+);
+```
+
+`module` imports an entire module API to a bound variable (importing the bar module to the bar variable above).
+
+Let's see how we import certain parts of another API:
+
+```javascript
+// this file is titled "foo.js"
+import hello from "bar";
+
+var hungry = "hippo";
+
+function awesome() {
+  console.log(
+    hello(hungry).toUpperCase()
+  );
+}
+
+export awesome;
+```
+Here we only import `hello()` from the bar module. Note that `hello()` is the only thing in bar's API. If there were other parts, but we imported `hello()`, we would only have access to `hello()` in foo.js. This is similar to the dependencies created by module managers we discussed previously.
+
+Note that `import` and `export` can be used as many times as necessary in a module's definition.
+
+The contents inside a module file are treated as if enclosed in a scope closure.
+
+To wrap things up, the key thing to remember is that a **closure is when a function can remember and access its lexical scope even when it's invoked outside its lexical scope.**
