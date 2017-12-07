@@ -105,7 +105,7 @@ If you want to include block scoping in your code, the above tools are available
 
 ### Appendix C: Lexical-this
 
-In my opinion, Appendix C would be better placed in the next YDKJS book on the `this` identifier when the reader has a better understanding of both lexical scope and `this`. I'll give a brief synposis below and revisit this appendix once I've finished _YDKJS: this and Object prototypes_.
+In my opinion, Appendix C would be better placed in the next YDKJS book on the `this` identifier when the reader has a better understanding of both lexical scope and `this`. I'll give a brief synopsis below and revisit this appendix once I've finished _YDKJS: this and Object prototypes_.
 
 The arrow function introduced in ES6 (denoted `=>`) has different behavior in regards to how `this` functions inside it.
 
