@@ -105,6 +105,8 @@ If you want to include block scoping in your code, the above tools are available
 
 ### Appendix C: Lexical-this
 
+In my opinion, Appendix C would be better placed in the next YDKJS book on the `this` identifier when the reader has a better understanding of both lexical scope and `this`. I'll give a brief synposis below and revisit this appendix once I've finished _YDKJS: this and Object prototypes_.
+
 The arrow function introduced in ES6 (denoted `=>`) has different behavior in regards to how `this` functions inside it.
 
 If you use `setTimeout` (or if any time seems to pass during run-time) with an object method that uses `this`, `this` loses its binding to the object definition it was used in.
@@ -112,5 +114,3 @@ If you use `setTimeout` (or if any time seems to pass during run-time) with an o
 If you reference `this` in an arrow function in the object definition, it follows lexical scope rules rather than `this` binding rules. Simpson says this is a workaround for a failure to understand and properly leverage `this` in code. We would have to use `bind()` in the object definition to properly leverage `this`.
 
 This shows that fat arrow functions do more than just make function declarations shorter (in this case they code in a bad practice into JavaScript).
-
-In my opinion, this section would be better placed in the next YDKJS book on the `this` identifier when the reader has a better understanding of both lexical scope and `this`.
