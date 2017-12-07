@@ -1,3 +1,5 @@
+![A picture of a laptop and orange juice on a table in a cafe.](pictures/2017-12-06 Scope and Closures Appendices header.jpg)
+
 Here are my notes on [Appendix A: Dynamic Scope](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/apA.md), [Appendix B: Polyfilling Block Scope](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/apB.md), and [Appendix C: Lexical-this](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/apC.md) of Kyle Simpson's book  _You Don't Know Javascript: Scope and Closures_.
 
 ### Appendix A: Dynamic Scope
