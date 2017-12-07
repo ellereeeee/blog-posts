@@ -47,3 +47,56 @@ bar();
 Note again that this is a theoretical illustration to help us understand lexical scope. JavaScript has lexical scope!
 
 As a side note, `this` is related to dynamic scope because it cares on how a function was called.
+
+### Appendix B: Polyfilling Block Scope
+
+It is possible to polyfill block scope in pre-ES6 environments with the `try` `catch` statement. Block scope exists in the `catch` clause.
+
+Here is ES6 block scope:
+
+```javascript
+{
+  let a = 2;
+  console.log(a); // 2
+}
+
+console.log(a); // Reference Error
+```
+
+And here is a `try` `catch` polyfill:
+
+```javascript
+try{throw 2}{catch a}{
+  console.log(a); // 2
+}
+
+console.log(a); // ReferenceError
+```
+
+Google has a project called Traceur that transpiles ES6 features into pre-ES6 environments that does something similar to the code above.
+
+To make code blocks more readable, Simpson suggestions writing them explicitly one of two ways:
+
+1) With a comment before the code:
+
+```javascript
+/*Let*/ { let a = 2
+        console.log(a);
+}
+
+console.log(a); // ReferenceError
+```
+
+2) Like this readable unsupported syntax that is transpiled with Simpson's tool called _let-er_:
+
+```javascript
+let (a = 2) {
+  console.log(a); // 2
+}
+
+console.log(a); // ReferenceError
+```
+
+Try/catch is a better solution than IIFEs for transpiling code blocks because IIFEs property as a function can change the meaning of `this`, `return`, `break`, and `continue`. Such changes could produce undesired results.
+
+If you want to include block scoping in your code, the above tools are available for your use.
