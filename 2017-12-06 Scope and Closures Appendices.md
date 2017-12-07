@@ -2,7 +2,7 @@ Here are my notes on [Appendix A: Dynamic Scope](https://github.com/getify/You-D
 
 ### Appendix A: Dynamic Scope
 
-Contrasting lexical scope with dynamic scope can better help us understand lexical scope. Remember that **JavaScript** has lexical scope.
+Contrasting lexical scope with dynamic scope can better help us understand lexical scope. Remember that **JavaScript has lexical scope**.
 
 Lexical scope is write-time while dynamic scope is run-time. Lexical scope cares where a function was declared while dynamic scope cares where a function was called from.
 
@@ -100,3 +100,15 @@ console.log(a); // ReferenceError
 Try/catch is a better solution than IIFEs for transpiling code blocks because IIFEs property as a function can change the meaning of `this`, `return`, `break`, and `continue`. Such changes could produce undesired results.
 
 If you want to include block scoping in your code, the above tools are available for your use.
+
+### Appendix C: Lexical-this
+
+The arrow function introduced in ES6 (denoted `=>`) has different behavior in regards to how `this` functions inside it.
+
+If you use `setTimeout` (or if any time seems to pass during run-time) with an object method that uses `this`, `this` loses its binding to the object definition it was used in.
+
+If you reference `this` in an arrow function in the object definition, it follows lexical scope rules rather than `this` binding rules. Simpson says this is a workaround for a failure to understand and properly leverage `this` in code. We would have to use `bind()` in the object definition to properly leverage `this`.
+
+This shows that fat arrow functions do more than just make function declarations shorter (in this case they code in a bad practice into JavaScript).
+
+In my opinion, this section would be better placed in the next YDKJS book on the `this` identifier when the reader has a better understanding of both lexical scope and `this`.
