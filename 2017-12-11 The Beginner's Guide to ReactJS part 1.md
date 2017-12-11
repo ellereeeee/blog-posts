@@ -19,7 +19,7 @@ This code snippet below creates HTML and CSS with vanilla JavaScript:
 </script>
 ```
 
-First, we create a div with the id "root" with html. Then we write in JavaScript a constant (ES6 syntax) that is assigned that div. Next, we make another div with JavaScript, give it the text "Hello World", and give it a class name of "container." We then nest the new div inside the div with the "root" id.
+First, we create a div with the id "root" with HTML. Then we write in JavaScript a constant (ES6 syntax) that is assigned that div. Next, we make another div with JavaScript, give it the text "Hello World", and give it a class name of "container." We then nest the new div inside the div with the "root" id.
 
 The following code achieves the same thing in React:
 
@@ -42,7 +42,7 @@ The following code achieves the same thing in React:
 </script>
 ```
 
-The commented out code from the first snippet is replaced in functionality by React. First we make a constant with **the `createElement()` method that takes three arguments: the html element, properties, and children of the element.** If we want, we can add more children. Last we have a **`render()` method that renders** `element` to `rootElement`.
+The commented out code from the first snippet is replaced in functionality by React. First we make a constant with **the `createElement()` method that takes three arguments: the HTML element, properties, and children of the element.** If we want, we can add more children. Last we have a **`render()` method that renders** `element` to `rootElement`.
 
 What happens when we run `console.log(element);`?
 
@@ -109,7 +109,7 @@ We add the Babel standalone CDN after the React CDNs and change the script type 
 
 It works!
 
-Notice that while there are some similarties to HTML in the JSX, the class attribute is `className` instead of html's `class`.
+Notice that while there are some similarities to HTML in the JSX, the class attribute is `className` instead of HTML's `class`.
 
 You can use JavaScript with JSX by using string interpolation. String interpolation is how you display a variable in a string. For example, if you wanted to make the HTML "Hello World" an external variable you could do this:
 
@@ -141,4 +141,4 @@ For example: `const element = <div {...props} className="this-displays">This als
 
 ![Overriding props on browser and in console.](pictures/JSX Override props.png)
 
-To use JSX In a nutshell, you start JSX with the carat `<`. You specify the element you want to render like `div`. You add props like html elements, but remember the syntax is a little different. You add the children, then close the element tag.
+To use JSX In a nutshell, you start JSX with the carat `<`. You specify the element you want to render like `div`. You add props like HTML elements, but remember the syntax is a little different. You add the children, then close the element tag.
