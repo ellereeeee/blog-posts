@@ -32,7 +32,7 @@ We change `<div>Hello World</div>` by wrapping it in an arrow function and give 
 
 `const message = (props) => <div>{props.msg}</div>`
 
-The arrow function returns the props object with the property msg all in an interpolation. The interpolation looks like this:
+The arrow function returns the props object with the property `msg` all in an interpolation. The interpolation looks like this:
 
 ```
 const element = (
@@ -55,7 +55,7 @@ Let's make the function calls more readable with JSX.
 
 Since JSX compiles down to `React.createElement()`, lets rewrite our code with `React.createElement()` first then rewrite the React code into JSX. This will helps us understand the JSX syntax.
 
-`React.createElement()` can take not only a string like `'div'` as its first argument, but also a function. It will pass the props to the function and that function will render more elements. This would render a div with the same message as before
+`React.createElement()` can take not only a string like `'div'` as its first argument, but also a function. It will pass the props to the function and that function will render more elements. This would render a div with the same message as before.
 
 ```
 const element = (
@@ -187,7 +187,7 @@ Prop types are so common the React team has built a package called "[prop-types]
 
 The prop types module has a few differences compared to our implementation above.
 
-**Props types** are optional be default. If we just run
+**Props types are optional by default.** If we just run
 
 ```
 SayHello.propTypes = {
