@@ -50,7 +50,7 @@ What happens when we run `console.log(element);`?
 
 The important thing to note is the `props` object. It contains the properties `children` and `className` which here corresponds to the inner HTML and CSS class name.
 
-If we have more than one argument for the last parameter, we would have an array for `children`. For example, this it what we would say if we had
+If we have more than one argument for the last parameter, we would have an array for `children`.
 
 ```
   const element = React.createElement( // create another div with `createElement` method
