@@ -4,6 +4,8 @@ This is the second part of my notes on egghead.io's [The Beginner's Guide to Rea
 
 ### Create Custom React Components
 
+We will learn how to create custom React components through reusable functions.
+
 In the code below we make two nested divs with "Hello World" with JSX and interpolation. 
 
 ```
