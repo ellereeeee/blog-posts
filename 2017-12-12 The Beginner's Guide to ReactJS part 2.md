@@ -107,7 +107,7 @@ The result would be the same.
 
 #### TL;DR
 
-To create a custom JX component that is resuable through your application you:
+To create a custom JSX component that is resuable through your application you:
  
 1) Create a variable that has a capital letter as the first character.
   
