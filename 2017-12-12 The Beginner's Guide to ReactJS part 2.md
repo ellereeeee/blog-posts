@@ -4,7 +4,7 @@ This is the second part of my notes on egghead.io's [The Beginner's Guide to Rea
 
 ### Create Custom React Components
 
-We will learn how to create custom React components through reusable functions.
+This section will show how to create custom React components through reusable functions.
 
 In the code below we make two nested divs with "Hello World" with JSX and interpolation. 
 
@@ -116,3 +116,107 @@ To create a custom JSX component that is resuable through your application you:
 3) You can use those props in whatever you return, such as a JSX div.
  
 Use the variable with the arrow-functioned assigned to it as a JSX element.
+
+### Validate Custom React Component Props with PropTypes
+
+This section will discuss tools to inform people when they pass the wrong prop type into a function.
+
+Check out this code:
+
+```
+<script type="text/babel">
+function SayHello(props) {
+  return (
+    <div>
+      Hello {props.firstName} {props.lastName}!
+    </div>
+  )
+}
+
+ReactDOM.render(
+  <SayHello firstName={true} />, // !!!
+  document.getElementById('root')
+)
+</script>
+</body>
+```
+`firstName` in the `<SayHello />` JSX expects a string, but gets a boolean. Also, no last name is entered.
+
+![Hello! displayed in the browser. The console displays the script.](pictures/Wrong Prop Types.png)
+
+Without getting into the details, we create an object on `SayHello` called `propTypes` that validates the `firstName` property with a function that returns an Error message in the console.
+
+```
+SayHello.propTypes = {
+  firstName(props, propName, componentName) {
+    if (typeof props[propName] !== 'string') {
+      return new Error(
+        `Hey, you should pass a string for ${propName} in ${componentName} but you passed a ${typeof props[propName]}!`
+      )
+    }
+  },
+}
+```
+
+![The Error message displayed in the console](pictures/Self Made Prop Type Error.png)
+
+We can refactor the code in `SayHello.propTypes` into an object with the property `string`. This lets us reuse it where necessary, such as for error checking both `firstName` and `lastName`.
+
+```
+const PropTypes = {
+  string(props, propName, componentName) {
+    if (typeof props[propName] !== 'string') {
+      return new Error(
+        `Hey, you should pass a string for ${propName} in ${componentName} but you passed a ${typeof props[propName]}!`
+      )
+    }
+  }
+}
+
+SayHello.propTypes = {
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+}
+```
+
+![Both firstName and lastName are tested in the console](pictures/Using PropTypes Object.png)
+
+#### The Prop Types Module
+
+Prop types are so common the React team has built a package called "[prop-types](https://www.npmjs.com/package/prop-types)" that does the same thing in our code above.
+
+The prop types module has a few differences compared to our implementation above.
+
+**Props types** are optional be default. If we just run
+
+```
+SayHello.propTypes = {
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+}
+```
+
+We will only get an error for the `firstName` in the console. To make sure both props are checked, we must add `.isRequired` in the `propTypes` definition like this:
+
+```
+SayHello.propTypes = {
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+}
+```
+
+For components declared as classes, propTypes are declared as static properties and work the same way.
+
+If we use the production version of react, we cannot use prop type validation. This is because prop types are good for development, but slow things down.
+
+### TL:DR
+
+To add prop types to validate props, you:
+
+1) Add a `.propTypes` property to a function component.
+
+2) The keys of that object map to the props of your function component.
+
+3) You then write functions to validate the props.
+
+The prop types module has a lot of validators built in, but can slow down your application. It is a development tool.
