@@ -10,7 +10,7 @@ In the code below we make two nested divs with "Hello World" with JSX and interp
 
 ```
 <div id="root"></div>
-<script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
 <script type="text/babel">
