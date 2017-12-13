@@ -52,7 +52,7 @@ The JSX above would be transpiled into React like this:
   }
 ```
 
-If you wanted to conditionally render a component in JSX, remember that we would have to use the curly braces `{}` to write in JavaScript. Anything in the curly braces must be an expression to be valid, so `if` statements don't work but ternary expression do. This is why ternary operators are so common in JSX code.
+If you wanted to conditionally render a component in JSX, remember that we would have to use the curly braces `{}` to write in JavaScript. Anything in the curly braces must be an expression to be valid, so `if` statements don't work but ternary expressions do. This is why ternary operators are so common in JSX code.
 
 The code below is similar to the code above, except the `Message` component is wrapped in a JSX div.
 
@@ -141,4 +141,4 @@ We lose focus because the whole DOM is being rerendered instead of just the time
 
 #### TL;DR
 
-One advantage of React is that does the only necessary DOM operations to rerender.
+One advantage of React is that it does the only necessary DOM operations to rerender.
