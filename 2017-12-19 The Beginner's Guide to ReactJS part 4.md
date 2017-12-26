@@ -185,6 +185,135 @@ Destructuring allows us to make flexible React components when styling.
 
 3) Destructuring allows us to make flexible React components when styling.
 
-#### Personal Thoughts on the Style Property
+#### My Thoughts on the Style Property
 
 While the examples above illustrate how the style property works in React, it's considered best practice to keep HTML and CSS separate. I imagine we should try the same and avoid using the style property in React.
+
+### Use Event Handlers with React
+
+This section will discuss how to use event handlers with React.
+
+The event handler examples will be used in this code:
+
+```
+const state = {eventCount: 0, username: ''}
+
+function App() {
+  return (
+    <div>
+      <p>
+        There have been {state.eventCount} events
+      </p>
+      <p>
+        <button>😄</button>
+      </p>
+      <p>You typed: {state.username}</p>
+      <p>
+        <input />
+      </p>
+    </div>
+  )
+}
+
+function setState(newState) {
+  Object.assign(state, newState)
+  renderApp()
+}
+
+function renderApp() {
+  ReactDOM.render(
+    <App />,
+    document.getElementById('root'),
+  )
+}
+
+renderApp()
+```
+
+`App` creates a UI. `state` keeps track of the states, one for the button and one for the input. The function `setState` updates our state with whatever we pass into `setState`. `setState` also rerenders with the `renderApp` function everytime we call it.
+
+The UI looks like this:
+
+![The button UI.](pictures/button UI.png)
+
+#### Buttons
+
+We make a function called `increment` and eventCount is incremented everytime we click the button.
+
+```
+function App() {
+  return (
+    <div>
+      <p>
+        There have been {state.eventCount} events
+      </p>
+      <p>
+        <button onClick={increment}>😄</button>
+      </p>
+      <p>You typed: {state.username}</p>
+      <p>
+        <input />
+      </p>
+    </div>
+  )
+}
+
+function increment() {
+  setState({
+    eventCount: state.eventCount + 1,
+  })
+}
+```
+
+![Clicking the smiley button increments the events.](gifs/onClick event.gif)
+
+We can also do the same thing with `onMouseOver`.
+
+`<button onMouseOver={increment}>😄</button>`.
+
+![Mousing over the smiley button increments the events.](gifs/onMouseOver event.gif)
+
+As well as with `onFocus`.
+
+`<button onFocus={increment}>😄</button>`
+
+![Focusing th smiley button increments the events.](gifs/onFocus event.gif)
+
+#### Input
+
+Input is unique in that it provides an `onChange` event. 
+
+```
+<input 
+  onChange = {updateUsername}
+/>
+```
+
+Every time the input changes this function is immediately called. We need the value of the input to update the username state.
+
+We'll make a function called `updateUsername` with `event` as a parameter. 
+
+```
+function updateUsername(event) {
+  setState({
+    username: event.target.value,
+  })
+}
+```
+`event.target` gets the input node and `.value` gets the value of the input node. Now `updateUsername` is called whenever we change the input.
+
+![Typing 'Hello world!' in the input is reflected in the UI.](gifs/onChange event.gif)
+
+#### React Event Delegation and Optimization
+
+React has it's own even system where it optimizes things for us with event delegation. There's only one handler for each type on the entire document, which manages calling your event handlers. 
+
+React events are directly on the rendered element. What you pass into the event is a direct reference to the function you want to have called, like how `onFocus` is a direct reference to the function `increment` in `onFocus={increment}`.
+
+This way it is easy to follow the code path of events.
+
+#### TL;DR
+
+Button have various events such as `onClick` or `onFocus`. Input is unique with the event `onChange` that rerenders itself everytime the input changes.
+
+Both button and input events take functions we pass into curly braces.
