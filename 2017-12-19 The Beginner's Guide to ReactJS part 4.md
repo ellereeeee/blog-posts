@@ -22,7 +22,7 @@ const element = (
 )
 ```
 
-Notice the syntatic differences with vanilla CSS. We use `className` instead of `class`. It is camel-cased instead of kebab-cased. We cannot use `class` as a variable; it would be a syntax error. `paddingLeft` is written in the same style. 
+Notice the syntactic differences with vanilla CSS. We use `className` instead of `class`. It is camel-cased instead of kebab-cased. We cannot use `class` as a variable; it would be a syntax error. `paddingLeft` is written in the same style. 
 
 `style` takes the value of 20 (type number) instead of the string `20px`. React converts it to pixels. **Note that values are also not vendor-prefixed.** Also, `style` takes an object instead of a string. We'll see how this is useful soon. 
 
@@ -144,6 +144,7 @@ function Box({style, size, className = "", ...rest}) { // 1, then 2
   )
 }
 ```
+
 In the code above, the code-author does not need to know the precise class names for the different box sizes. We use a string template so the user only types in the size they want, like "small." Destructuring can make our code more user-friendly if we want.
 
 Our boxes look like this:
@@ -238,7 +239,7 @@ The UI looks like this:
 
 #### Buttons
 
-We make a function called `increment` and eventCount is incremented everytime we click the button.
+We make a function called `increment` and `eventCount` is incremented every time we click the button.
 
 ```
 function App() {
@@ -277,7 +278,7 @@ As well as with `onFocus`.
 
 `<button onFocus={increment}>😄</button>`
 
-![Focusing th smiley button increments the events.](gifs/onFocus event.gif)
+![Focusing the smiley button increments the events.](gifs/onFocus event.gif)
 
 #### Input
 
@@ -316,4 +317,4 @@ This way it is easy to follow the code path of events.
 
 Button have various events such as `onClick` or `onFocus`. Input is unique with the event `onChange` that rerenders itself everytime the input changes.
 
-Both button and input events take functions we pass into curly braces.
+Both button and input events take functions we pass into curly braces. We can write the functions in the curly braces or write the functions outside then pass them in.
