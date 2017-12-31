@@ -45,7 +45,7 @@ ReactDOM.render(
 
 Let's make the parts we want to be dynamic into props.
 
-We add the prop `lapse` to to the label and to the const `element`. We add the prop `running` to the first button and to the const `element`. If `running` is false we get "Start," and if it's true we get "Stop." `lapse` and `element` are initialized in the `element` constant.
+We add the prop `lapse` to the label and to the constant `element`. We add the prop `running` to the first button and to the constant `element`. If `running` is false we get "Start," and if it's true we get "Stop." `lapse` and `element` are initialized in the `element` constant.
 
 ```
   return (
@@ -79,7 +79,7 @@ Now we'll rewrite the component into a class.
  
  4) Assign `this.state` to our props in curly brackets like this: `const {lapse, running} = this.state`
  
- 4) Remove the `lapse` and `running` props in `element` identifier. We initialized these props in step 3.
+ 5) Remove the `lapse` and `running` props in `element` identifier. We initialized these props in step 3.
 
 ```
 class StopWatch extends React.Component {
@@ -111,7 +111,7 @@ class StopWatch extends React.Component {
 const element = <StopWatch />
 ```
 
-Although our UI still hasn't change in appearance, we've layed the groundwork for it to be dynamic. 
+Although our UI still hasn't changed in appearance, we've laid the groundwork for it to be dynamic. 
 
 #### Make the UI Functional
 
@@ -183,9 +183,9 @@ We need to make those buttons' event handlers run conditionally off the current 
 
 1) Write `this.setState` and provide an updater function. Get the state by passing it in the function, then return the opposite of our current state. We are essentially toggling states.
 
-2) Based off state.running, set the interval or pause the time. If it is running, clear the existing interval (remember that running true shows 'Stop' on the first button). If not, set the interval.
+2) Based off `state.running`, set the interval or pause the time. If it is running, clear the existing interval (remember that `running: true` shows 'Stop' on the first button). If not, set the interval.
 
-3) Use `clearInterval` to stop a timer set by `setInterval`. `clearInterval` must take a variable, so give the setInterval identifer a handler. Assign setInterval to this.timer.
+3) Use `clearInterval` to stop a timer set by `setInterval`. `clearInterval` must take a variable, so give the `setInterval` identifier a handler. Assign `setInterval` to `this.timer`.
 
 4) Put what was in the previous `handleRunClick` method into the `else` part of the statement.
  
@@ -235,7 +235,7 @@ To make an application stateful, follow a process similar to the one we used to 
 
 If we remove the `StopWatch` component from the DOM while `StopWatch` is running, we get a serious memory leak. `setInterval` will continue to run even though nothing is displayed. We need to clear the interval.
 
-To stop the memory leak, we'll use `componentWillUnmount`
+To stop the memory leak, we'll use `componentWillUnmount`:
 
 ```
 handleClearClick = () => {
