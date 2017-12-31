@@ -117,7 +117,7 @@ Although our UI still hasn't change in appearance, we've layed the groundwork fo
 
 Let's make the UI functional.
 
- 1) Add `onClick` handlers to the Start and Stop buttons. We give it the value of `this.handleRunClick`.
+ 1) Add `onClick` handlers to the Start and Stop buttons. Give it the value of `this.handleRunClick`.
  
  2) Make `handleRunClick` in the class. Assign an arrow function..
  
@@ -125,18 +125,17 @@ Let's make the UI functional.
  
  4) The second thing `handleRunClick` returns is the method `setInterval`. It updates lapse with `Date.now() - startTime`.
  
- `handleRunClick` updates `startTime` as often as possible with `setInterval`, which reassigns the value of lapse with `Date.now() - startTime`. The first time this runs, it will be `Date.now()` since `lapse` will be initialized as 0. When it runs the second time, it will be `Date.now()` minus the previous `startingTime`, so the time passed is reflected.
+ `handleRunClick` updates `startTime` as often as possible with `setInterval`, which reassigns the value of `lapse` with `Date.now() - startTime`. The first time this runs, it will be `Date.now()` since `lapse` will be initialized as 0. When it runs the second time, it will be `Date.now()` minus the previous `startingTime`, so the time passed is reflected.
  
- 5) In `handleRunClick`, update `state` with `this.
+ 5) In `handleRunClick`, update `state` with `this.setState({running: true})`. Now when the Start button is clicked, the clock will show "Stop" as the time runs.
  
- 5) Add an `onClick` handler to to the Clear button.
+ 6) Add an `onClick` handler to to the Clear button. Give it the value of `this.handleClearClick`.
  
- 6) Make `handleClearClick` in the class. Assign an empty arrow function to it for now.
+ 7) Make `handleClearClick` in the class. Assign an arrow function.
  
+ 8) In `handleClearClick`, update `state` with `this.setState({lapse: 0, running: false})`. This resets our state to the initial values.
  
-9) We make handleRunClick in our code.
-10) We make an onClick handler for our clear button and make it in our class.
-11) we make the constant startTime Let's examine how this works. First, we make the constant startTime, which is the time in ms passed since 01.01.1970 minus 0. We update it as often as possible with setInterval, which reassigns the value of lapse by Date.now minus startTime. The first time this runs, it will be Date.now - Date.now since lapse is zero. When it runs the second time, it will be Date.now minus the previous startingTime. So the time passed is reflected.  We also making running equal true so the button shows "Stop" once the timer starts.
+Let's check out the results below:
 
 ```
 class StopWatch extends React.Component {
@@ -175,3 +174,84 @@ class StopWatch extends React.Component {
   }
 }
 ```
+
+![The timer starts, but neither buttons do anything after that.](gifs/timer won't stop.gif)
+
+Uh oh! The timer starts, but the Start/Stop and Clear buttons don't do anything after that. In the code above, the Clear button will only work if the timer is paused, but the Start/Stop button cannot pause the timer.
+
+We need to make those buttons' event handlers run conditionally off the current state. Let's start with `handleRunClick`.
+
+1) Write `this.setState` and provide an updater function. Get the state by passing it in the function, then return the opposite of our current state. We are essentially toggling states.
+
+2) Based off state.running, set the interval or pause the time. If it is running, clear the existing interval (remember that running true shows 'Stop' on the first button). If not, set the interval.
+
+3) Use `clearInterval` to stop a timer set by `setInterval`. `clearInterval` must take a variable, so give the setInterval identifer a handler. Assign setInterval to this.timer.
+
+4) Put what was in the previous `handleRunClick` method into the `else` part of the statement.
+ 
+```
+handleRunClick = () => {
+    this.setState(state => {
+      if (state.running) {
+        clearInterval(this.timer)
+      } else {
+        const startTime = Date.now() - this.state.lapse
+        this.timer = setInterval(() => {
+          this.setState({lapse: Date.now() - startTime})
+        })
+      }
+      return {running: !state.running}
+    })
+```
+
+To make `handleClearClick` always work, stop the timer with `clearInterval(this.timer)`. Like `handleRunClick`, this will let us clear the timer while the timer is running.
+
+```
+handleClearClick = () => {
+  clearInterval(this.timer)
+  this.setState({lapse: 0, running: false})
+}
+```
+
+![The timer is works properly.](gifs/working timer.gif)
+
+It works! This application has a memory leak which we will fix in the next lesson.
+
+#### TL;DR
+
+To make an application stateful, follow a process similar to the one we used to above.
+
+1) Create a static UI.
+
+2) Extract the parts that need to be dynamic into props.
+
+3) Move the props into state, and then use the props that are initialized in state.
+
+4) Add interactivity with event handlers. Modify the state with `this.setState`. 
+
+5) If state depends on old state, then use an updater function that accepts state then returns the new state.
+
+### Stop Memory Leaks with `componentWillUnmount`
+
+If we remove the `StopWatch` component from the DOM while `StopWatch` is running, we get a serious memory leak. `setInterval` will continue to run even though nothing is displayed. We need to clear the interval.
+
+To stop the memory leak, we'll use `componentWillUnmount`
+
+```
+handleClearClick = () => {
+  clearInterval(this.timer)
+  this.setState({lapse: 0, running: false})
+}
+componenWillUnmount() {
+  clearInterval(this.timer)
+}
+render() {
+```
+
+This is the explanation of `componentWillUnmount` in the [React docs](https://reactjs.org/docs/react-component.html):
+
+> `componentWillUnmount()` is invoked immediately before a component is unmounted and destroyed. Perform any necessary cleanup in this method, such as invalidating timers, canceling network requests, or cleaning up any subscriptions that were created in `componentDidMount()`.
+
+#### TL;DR
+
+Use `componentWillUnmount()` when you need to remove things from the DOM to prevent memory leaks.
