@@ -127,3 +127,17 @@ The edited code would look like this:
 Uh oh! It doesn't work anymore. If we open the developer's console, we get `Uncaught TypeError: Cannot read property 'setState' of undefined`.
 
 `this`'s binding in `this.setState` to the object created by class `Counter` was lost when we assigned it to `handleClick()`. We are just assigning a reference to the `setState` function to `handleClick()`. `handleClick()` is also just a plain function. Because [classes in ES6 are always run in strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes), `this` defaults to `undefined`. Notice the parallels from the example above in JavaScript.
+
+#### Preserving `this` Binding in Class Components
+
+There are several ways to ensure the `this` binding is not lost.
+
+One way is with "explicit binding," or rule number 2 from the above `this` binding rules. This is when we explicitly say what we want `this` to bind to with `call`, `apply`, or `bind`. 
+
+Here we'll **use the built-in `bind` utility**. `bind` returns a new function that is hard-coded to call the original function with the `this` context object you specified. This variation of explicit binding involving assigning `call`, `apply`, or `bind` expressions to functions is called "hard binding."
+
+The timer will function properly if we edit `onClick` like this:
+
+`onClick={this.handleClick.bind(this)}`
+
+stopped at 2:17 ending at using .bind explanation
