@@ -48,3 +48,82 @@ The `this` binding to `bob` is lost when `bob.greet` is assigned to the plain fu
 It's important to note that even though it `greetFn` looks like a reference to `bob.greet`, it's actually just a reference to the function `greet`.
 
 Let's look at something similar:
+
+```
+var bob = {
+  name: 'Bob',
+  greet(name) {
+    return `Hi ${name}, my name is ${this.name}`;
+  }
+}
+
+bob.greet('Jane'); // "Hi Jane, my name is Bob"
+
+var greetFn = bob.greet;
+
+greetFn('Jane'); // "Hi Jane, my name is !"
+```
+
+Since there is no global variable "name," nothing is returned.
+
+Now we can understand how something similar happens when updating state in React, and how to deal with it.
+
+#### Losing `this` Binding in Class Components
+
+We'll start by making a button that increments a number when it's clicked.
+
+```
+class Counter extends React.Component {
+  constructor(...args) {
+    super(...args)
+    this.state = {count: 0}
+  }
+  render() {
+    return (
+      <button 
+        onClick={() =>
+          this.setState(({count}) => ({
+            count: count + 1,
+        }))}
+      >
+        {this.state.count}
+      </button>
+    )
+  }
+}
+ReactDOM.render(
+  <Counter />,
+  document.getElementById('root'),
+)
+```
+
+![The initial incrementing button. It works.](gifs/initial counter.gif)
+
+Focus on on the `onClick` value. We have an arrow function that increments state with `this.setState`.
+
+While this code is completely functional, we could assign the `this.setState` function to an event handler for more readability.
+
+The edited code would look like this: 
+
+```
+  handleClick() {
+          this.setState(({count}) => ({
+            count: count + 1,
+        }))
+  }
+  render() {
+    return (
+      <button 
+        onClick={this.handleClick}
+      >
+        {this.state.count}
+      </button>
+    )
+  }
+```
+
+![The button does not work](gifs/broken counter.gif)
+
+Uh oh! It doesn't work anymore. If we open the developer's console, we get `Uncaught TypeError: Cannot read property 'setState' of undefined`.
+
+`this`'s binding in `this.setState` to the object created by class `Counter` was lost when we assigned it to `handleClick()`. We are just assigning a reference to the `setState` function to `handleClick()`. `handleClick()` is also just a plain function. Because [classes in ES6 are always run in strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes), `this` defaults to `undefined`. Notice the parallels from the example above in JavaScript.
