@@ -130,14 +130,107 @@ Uh oh! It doesn't work anymore. If we open the developer's console, we get `Unca
 
 #### Preserving `this` Binding in Class Components
 
-There are several ways to ensure the `this` binding is not lost.
+We'll cover several ways to ensure the `this` binding is not lost.
 
-One way is with "explicit binding," or rule number 2 from the above `this` binding rules. This is when we explicitly say what we want `this` to bind to with `call`, `apply`, or `bind`. 
+One way uses "explicit binding," or rule number 2 from the above `this` binding rules. This is when we explicitly say what we want `this` to bind to with `call`, `apply`, or `bind`. 
 
-Here we'll **use the built-in `bind` utility**. `bind` returns a new function that is hard-coded to call the original function with the `this` context object you specified. This variation of explicit binding involving assigning `call`, `apply`, or `bind` expressions to functions is called "hard binding."
+Here we'll **use the built-in `bind` utility** in the `onClick` assignment. `bind` returns a new function that is hard-coded to call the original function with the `this` context object you specified. This variation of explicit binding involving assigning `call`, `apply`, or `bind` expressions to functions is called "hard binding."
 
 The timer will function properly if we edit `onClick` like this:
 
 `onClick={this.handleClick.bind(this)}`
 
-stopped at 2:17 ending at using .bind explanation
+While this works, this could be a performance bottleneck in some situations.
+
+To deal with the bottleneck we can reference the prototypal method `handleClick()` by adding `this.handleClick` in the constructor and assiging it a pre-bound `handleClick` method.
+
+The contructor would look like this:
+
+```
+  constructor(...args) {
+    super(...args)
+    this.state = {count: 0}
+    this.handleClick = this.handleClick.bind(this)
+  }
+```
+
+This is the same as the common pattern of lexically capturing `this` in pre-ES6 code, like in `var self = this;`.
+
+This solution can be cumbersome if we need to do this for a lot of methods.
+
+Let's look at another solution with [public class fields](https://tc39.github.io/proposal-class-public-fields/). In a nutshell, these let us declare class properties without the constructor.
+
+Look at the code below for before and after public class fields are implemented.
+
+Before:
+
+```
+  constructor(...args) {
+    super(...args)
+    this.state = {count: 0}
+    this.handleClick = this.handleClick.bind(this)
+  }
+  handleClick() {
+          this.setState(({count}) => ({
+            count: count + 1,
+        }))
+  }
+```
+
+After:
+
+```
+  state = {count: 0}
+  handleClick = this.handleClick.bind(this)
+  handleClick() {
+          this.setState(({count}) => ({
+            count: count + 1,
+        }))
+  }
+```
+
+We've moved `this.state` and the `this.handeClick` assignments out of the constructor and into the class body. `this.` is no longer necessary since `state` and `handleClick` are in the class body. `state` and `handeClick` are the public class fields and we assign expressions to them. Since the constructor has become the same as the default constructor, we've removed it.
+
+The incrementing counter will work with this implementation.
+
+We could refactor this by removing the `handleClick()` method from the prototype and having it only on the instance.
+
+```
+  state = {count: 0}
+  handleClick = function() {
+          this.setState(({count}) => ({
+            count: count + 1,
+        }))
+  }.bind(this)
+```
+
+If for whatever reason you're adverse to using `.bind`, you can use the lexical `this` that are possible with arrow functions.
+
+```
+  handleClick = () => {
+          this.setState(({count}) => ({
+            count: count + 1,
+        }))
+  }
+```
+
+#### Which way is best?
+
+We discussed four main ways:
+
+1) Hard binding the method with `.bind` in event handler assignment value
+
+2) Lexically capturing the prototype method in the constructor
+
+3) Using public class fields (I consider the function assignment more of a refactor since we still `.bind`)
+
+4) Using lexical `this` via arrow functions
+
+The issue with number 1 is that it can be a performance bottleneck in some situations. Number 2 can be cumbersome if we have to do it for many methods. Number 3 is currently an experimental implementation; it's probably not good for production code.
+
+Number 4 works and is very common, but it's not without its criticisms. [YDKJS](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch2.md) author Kyle Simpson says that using lexical `this` reinforces a bad practice of evading a solid understanding of `this`. He suggests people either stick with lexical style code or embrace `this` and avoid lexical `this`.
+
+Either way it's important to understand both hard binding and lexical `this` so you can understand others' code and adapt to any situation when working in a team.
+
+#### TL;DR
+
