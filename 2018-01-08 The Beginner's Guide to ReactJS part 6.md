@@ -204,7 +204,7 @@ We could refactor this by removing the `handleClick()` method from the prototype
   }.bind(this)
 ```
 
-If for whatever reason you're adverse to using `.bind`, you can use the lexical `this` that are possible with arrow functions.
+While this works, we have to call the `.bind` method everytime we update state. You can use the lexical `this` that are possible with arrow functions to workaround this.
 
 ```
   handleClick = () => {
@@ -222,11 +222,11 @@ We discussed four main ways:
 
 2) Lexically capturing the prototype method in the constructor
 
-3) Using public class fields (I consider the function assignment more of a refactor since we still `.bind`)
+3) A variation of number 2 using public class fields
 
 4) Using lexical `this` via arrow functions
 
-The issue with number 1 is that it can be a performance bottleneck in some situations. Number 2 can be cumbersome if we have to do it for many methods. Number 3 is currently an experimental implementation; it's probably not good for production code.
+The issue with number 1 is that it can be a performance bottleneck in some situations. Number 2 can be cumbersome if we have to do it for many methods. Number 3 is currently an experimental implementation; it's probably not good for production code (although it's commonly used in many projects).
 
 Number 4 works and is very common, but it's not without its criticisms. [YDKJS](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch2.md) author Kyle Simpson says that using lexical `this` reinforces a bad practice of evading a solid understanding of `this`. He suggests people either stick with lexical style code or embrace `this` and avoid lexical `this`.
 
@@ -234,3 +234,116 @@ Either way it's important to understand both hard binding and lexical `this` so 
 
 #### TL;DR
 
+Be careful of losing the `this` binding when updating state in class components. You can keep the binding with either the `.bind` method, capturing lexical `this` via assignment in the constructor or with public class fields, or with the lexical `this` included in arrow functions.
+
+### Manipulate the DOM with React refs
+
+This section will explain how to manipulate the DOM node directly with React's `ref` prop. Sometimes this is necessary for some JavaScript libraries to work or when we want to get the value of form fields.
+
+We'll use [vanilla-tilt.js](https://micku7zu.github.io/vanilla-tilt.js/) as an example on how to make a JavaScript library functional with `ref`.
+
+#### Making a Static Image
+
+This is our base code:
+
+```
+class Tilt extends React.Component {
+  render() {
+    return (
+      <div className="tilt-root">
+       <div className="tilt-child">
+         <div {...this.props} />
+       </div>
+      </div>
+    )
+  }
+}
+
+const element = (
+  <div className="totally-centered">
+    <Tilt>
+      <div className="totally-centered">
+        vanilla-tilt.js
+      </div>
+    </Tilt>
+  </div>
+)
+
+ReactDOM.render(
+  element,
+  document.getElementById('root'),
+)
+```
+
+Class `Tilt` renders a div with the class `tilt-root`, which nests a div with the class `tilt-child`, which nests a div that spreads the props. `tilt-root` styles one div to have the colored gradient while `tilt-child` is a smaller white box. Both also have styles for animations we'll see later.
+
+We then create constant `element`, which is the `Tilt` component wrapped in a div with the class `totally-centered`. There is another div with the same class nested inside of `Tilt` with the words "vanilla-tilt.js". `totally-centered` are flexbox styles that horizontally and vertically center content.
+
+This code produces this static image:
+
+![Static white box in a colored gradient box.](pictures/static vanilla-tilt.png).
+
+#### Adding `ref`
+
+Taken from the [React docs](https://reactjs.org/docs/refs-and-the-dom.html),
+
+> The ref attribute takes a callback function, and the callback will be executed immediately after the component is mounted or unmounted.
+>
+> When the ref attribute is used on an HTML element, the ref callback receives the underlying DOM element as its argument.
+
+In our code, we'll use the `ref` callback to store a reference to our desired DOM node.
+
+The render method now returns this:
+
+```
+    return (
+      <div
+       ref={node => (this.rootNode = node)}
+       className="tilt-root">
+       <div className="tilt-child">
+         <div {...this.props} />
+       </div>
+      </div>
+```
+
+We can see we're accessing the node we want with:
+
+```
+  componentDidMount() {
+    console.log(this.rootNode)
+  }
+``` 
+![logging this.rootNode in the console](pictures/rootNode.png)
+
+#### Using the Node with a Library
+
+Now we can use `this.rootNode` with the vanilla-tilt library.
+
+We bring in the vanilla-tilt library with a script `<script src="https://unpkg.com/vanilla-tilt@1.4.1/dist/vanilla-tilt.min.js"></script>`.
+
+Then we can use the vanilla-tilt library by putting the `VanillaTilt` global in the `ComponentDidMount` method because we can access the node after the component mounts. We initialize `VanillaTilt` with `init` then pass in some options onto the node (`this.rootNode`). Our new code looks like this:
+
+```
+  componentDidMount() {
+    VanillaTilt.init(this.rootNode,{
+      max: 25,
+      speed: 400,
+      glare: true,
+      'max-glare': 0.5,
+    })
+  }
+```
+
+![VanillaTilt working.](gifs/VanillaTilt.gif)
+
+It works!
+
+#### TL;DR
+
+To manipulate the DOM,
+
+1) Pass on a `ref` on the element that you're rendering. Putting `ref` on a class references an instance of that class.
+
+2) In the `ref` value, pass in the node as the argument and return an assignment of the node to a value in the instance (`this.something`).
+
+3) After the component is mounted, the node can be used for a library.
