@@ -64,7 +64,7 @@ var greetFn = bob.greet;
 greetFn('Jane'); // "Hi Jane, my name is !"
 ```
 
-Since there is no global variable "name," nothing is returned.
+Since there is no global variable `name`, nothing is returned.
 
 Now we can understand how something similar happens when updating state in React, and how to deal with it.
 
@@ -142,9 +142,9 @@ The timer will function properly if we edit `onClick` like this:
 
 While this works, this could be a performance bottleneck in some situations.
 
-To deal with the bottleneck we can reference the prototypal method `handleClick()` by adding `this.handleClick` in the constructor and assiging it a pre-bound `handleClick` method.
+To deal with the bottleneck we can reference the prototypal method `handleClick()` by adding `this.handleClick` in the constructor and assigning it a pre-bound `handleClick` method.
 
-The contructor would look like this:
+The constructor would look like this:
 
 ```
   constructor(...args) {
@@ -204,7 +204,7 @@ We could refactor this by removing the `handleClick()` method from the prototype
   }.bind(this)
 ```
 
-While this works, we have to call the `.bind` method everytime we update state. You can use the lexical `this` that are possible with arrow functions to workaround this.
+While this works, we have to call the `.bind` method every time we update state. We can use the lexical `this` that are possible with arrow functions to workaround this.
 
 ```
   handleClick = () => {
@@ -344,6 +344,6 @@ To manipulate the DOM,
 
 1) Pass on a `ref` on the element that you're rendering. Putting `ref` on a class references an instance of that class.
 
-2) In the `ref` value, pass in the node as the argument and return an assignment of the node to a value in the instance (`this.something`).
+2) In the `ref` value, pass in the node as the argument and return an assignment of the node to a value in the instance (ex: `this.rootNode`).
 
-3) After the component is mounted, the node can be used for a library.
+3) After the component is mounted, the node can be used for a library or something else.
