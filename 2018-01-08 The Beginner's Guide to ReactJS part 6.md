@@ -306,13 +306,28 @@ The render method now returns this:
       </div>
 ```
 
+It's a good practice not to assign arrow functions to refs since arrow function assignments are recreated on each rerender and for [other reasons](https://stackoverflow.com/questions/36677733/why-shouldnt-jsx-props-use-arrow-functions-or-bind).
+
+We could rewrite the code like this:
+
+```
+  setRef = node => {
+    return this.rootNode = node
+  }
+    render() {
+    return (
+      <div
+       ref={this.setRef}
+```
+
 We can see we're accessing the node we want with:
 
 ```
   componentDidMount() {
     console.log(this.rootNode)
   }
-``` 
+```
+
 ![logging this.rootNode in the console](pictures/rootNode.png)
 
 #### Using the Node with a Library
