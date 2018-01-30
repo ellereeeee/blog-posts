@@ -81,9 +81,9 @@ Assigning `event.target` to a property in an object literal and logging it in Re
 
 In the console we click on `{target: form}`, then `target:form`, then `0:input`, and finally on the `(...)` value under `value` to see the string `"Richard"` or whatever is submitted in the form.
 
-2) With this knowledge, we could get the value with **`event.target[0].value`**.
+With this knowledge, we could get the value with **`event.target[0].value`**.
 
-3) The third way is by adding the `name` prop to the `input`.
+2) The second way is by adding the `name` prop to the `input`.
 
 Like this: `<input type="text" name="username"/>`
 
@@ -106,3 +106,46 @@ Logging this to the console:
 And submitting `Richard` would show this:
 
 !["Richard" is submitted and {target: form}, Richard and Richard appear in the console.](pictures/basic forms console.png)
+
+3) The last way is with React's `ref` prop.
+
+Adding a `ref` to the `input` like this:
+
+```
+<input type="text" name="username" ref={node => (this.inputNode = node)}/>
+```
+
+Can log the value to the console like this:
+
+```
+console.log(this.inputNode.value)
+```
+
+It's a good practice not to assign arrow functions to refs since it recreates the function on each rerender and for [other reasons](https://stackoverflow.com/questions/36677733/why-shouldnt-jsx-props-use-arrow-functions-or-bind). We could rewrite the code like this: 
+
+```
+  setRef = node => {
+    this.inputNode = node
+  }
+  render() {
+    return (
+    <form onSubmit={this.handleSubmit}>
+      <label>
+        Name:
+        <input type="text" name="username" ref={this.setRef}/>
+        <button type="submit">Submit</button>
+      </label>
+    </form>
+```
+
+#### TL;DR
+
+There are three ways to get the input from a React form.
+
+1) With the target event property.
+
+2) With the `name` prop.
+
+3) With `refs`.
+
+Refs are nice because they makes things more explicit, but the name attributes can be helpful when there is a big form and keeping track of many refs would be tedious.
