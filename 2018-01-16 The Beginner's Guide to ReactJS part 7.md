@@ -149,3 +149,97 @@ There are three ways to get the input from a React form.
 3) With `refs`.
 
 Refs are nice because they makes things more explicit, but the name attributes can be helpful when there is a big form and keeping track of many refs would be tedious.
+
+### Make Dynamic Forms with React
+
+This section will discuss how to use the `onChange` prop on an input to do dynamic and custom validation of a form as the user makes changes to the input.
+
+Below we have a form that renders `Name` label, input, and submit button. One of two error messages can appear after pressing the submit button. The first is if the input is less than three characters and the second is if the input does not contain the "s" character. If there is no error the we alert the user with success.
+
+![Testing all error possibilities until an acceptable input is entered.](gifs/static form.gif)
+
+This experience is somewhat incovenient for the user; it would better if the error messages were rendered as the user was typing and the submit button was only clickable if the input is acceptable. Let's try to code that.
+
+First, let's examine the code in the current static form. It looks like this:
+
+```
+class NameForm extends React.Component {
+  handleSubmit = event => {
+    event.preventDefault()
+    const value = 
+      event.target.elements.username.value
+    const error = this.props.getErrorMessage(
+      value,
+    )
+    if (error) {
+      alert(`error: ${error}`)
+    } else {
+      alert(`success: ${value}`)
+    }
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" name="username" />
+        </label>
+        <button type="submit">Submit</button>
+      </form>
+    )
+  }
+}
+
+ReactDOM.render(
+  <NameForm
+    getErrorMessage={value => {
+      if (value.length < 3) {
+        return `Value must be at least 3 characters, but is only 2`
+      }
+      if (!value.includes('s')) {
+        return `Value does not include "s" but it should!`
+      }
+      return null
+    }}
+  />,
+  document.getElementById('root'),
+)
+```
+
+This code renders a form with a handler when the submit button is clicked. The handler prevents the default behavior of submit, gets the value of the input, gets the error message from the `getErrorMessage` prop on the `NameForm` component, and either alerts the error or a success with the input value.
+
+Validation of the input is done by the `getErrorMessage` prop on the `NameForm` component. This is done by assigning an arrow function takes the input value as an argument and checks the input with if statements.
+
+#### Managing State with the `onChange` prop
+
+We must first introduce state to make it dynamic. Add state after at the beginning of the class body like this:
+
+```
+  state = {error: null}
+```
+
+Add the onChange prop to the input and assign it `this.handleChange` like this:
+
+```
+  <input type="text" onChange={this.handleChange} name="username" />
+```
+
+The `handleChange` method gets the value of the input and sets `error` state property with the `getErrorMessage` prop. The code looks like this:
+
+```
+    handleChange = (event) => {
+      const {value} = event.target
+      this.setState({
+        error: this.props.getErrorMessage(value)
+      })
+    }
+```
+Get our error (our state) at the beginning of the render method like this:
+
+```
+  const {error} = this.state
+```
+
+Disable the button by default by assigning it a Boolean function with `error` as the argument:
+
