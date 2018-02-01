@@ -81,7 +81,7 @@ Due to the recursive nature of the spread operator `...`, the `style` in the ele
 
 #### Destructuring
 
-Destructuring is a very help tool we can use to remedy this situation. Destructuring is when we unpack values from object properties or values from arrays.
+Destructuring is a very helpful tool we can use to remedy this situation. Destructuring is when we unpack values from object properties or values from arrays.
 
 Let's examine a solution with destructuring, step by step:
 
