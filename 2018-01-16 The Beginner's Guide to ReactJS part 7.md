@@ -4,6 +4,8 @@ This is the seventh part of my notes on egghead.io's [The Beginner's Guide to Re
 
 ### Make Basic Forms with React
 
+This section will discuss how to make a basic form with React, how to prevent default submit behavior with `onSubmit`, and how to get values from a form.
+
 #### Preventing Default Behavior
 
 Let's start with a basic input and submit button in a form element:
@@ -158,7 +160,7 @@ Below we have a form that renders `Name` label, input, and submit button. One of
 
 ![Testing all error possibilities until an acceptable input is entered.](gifs/static form.gif)
 
-This experience is somewhat incovenient for the user; it would better if the error messages were rendered as the user was typing and the submit button was only clickable if the input is acceptable. Let's try to code that.
+This experience is somewhat inconvenient for the user; it would better if the error messages were rendered as the user was typing and the submit button was only clickable if the input is acceptable. Let's try to code that.
 
 First, let's examine the code in the current static form. It looks like this:
 
@@ -263,7 +265,6 @@ One way to fix this is after the components mounts. We can copy the `setState` c
     })
   }
 ```
-
 
 This will initialize the submit button to be greyed out by default.
 
