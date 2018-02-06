@@ -213,7 +213,7 @@ Validation of the input is done by the `getErrorMessage` prop on the `NameForm` 
 
 #### Managing State with the `onChange` prop
 
-We must first introduce state to make it dynamic. Add state after at the beginning of the class body like this:
+We must first introduce state to make it dynamic. Add state after the beginning of the class body like this:
 
 ```
   state = {error: null}
