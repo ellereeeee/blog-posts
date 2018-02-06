@@ -209,9 +209,9 @@ ReactDOM.render(
 
 This code renders a form with a handler when the submit button is clicked. The handler prevents the default behavior of submit, gets the value of the input, gets the error message from the `getErrorMessage` prop on the `NameForm` component, and either alerts the error or a success with the input value.
 
-Validation of the input is done by the `getErrorMessage` prop on the `NameForm` component. This is done by assigning an arrow function takes the input value as an argument and checks the input with if statements.
+Validation of the input is done by the `getErrorMessage` prop on the `NameForm` component. This is done by assigning an arrow function that takes the input value as an argument and checks the input with if statements.
 
-#### Managing State with the `onChange` prop
+#### Making a Conditional Submit Button
 
 We must first introduce state to make it dynamic. Add state after the beginning of the class body like this:
 
@@ -235,7 +235,8 @@ The `handleChange` method gets the value of the input and sets `error` state pro
       })
     }
 ```
-Get our error (our state) at the beginning of the render method like this:
+
+Get our error in the state at the beginning of the render method like this:
 
 ```
   const {error} = this.state
@@ -243,3 +244,57 @@ Get our error (our state) at the beginning of the render method like this:
 
 Disable the button by default by assigning it a Boolean function with `error` as the argument:
 
+```
+  <button disabled={Boolean(error)} type="submit">Submit</button>
+```
+
+Now the submit is greyed out unless there is no error.
+
+![The submit button is greyed out unless there is no error](gifs/greyed submit.gif)
+
+Notice how the submit button is enabled (not greyed out) by default. This is because the code hasn't checked for errors yet.
+
+One way to fix this is after the components mounts. We can copy the `setState` code from `handleChange` into `componentDidMount()`. Change `value` to an empty string since there aren't any values when the input is empty. It looks like this after `handleChange` in the code:
+
+```
+  componentDidMount() {
+    this.setState({
+      error: this.props.getErrorMessage('')
+    })
+  }
+```
+
+
+This will initialize the submit button to be greyed out by default.
+
+Alternatively, we could not have this code and initialize our state with the above `error` value like this:
+
+```
+  state = {error:this.props.getErrorMessage('')}
+```
+
+This would be better since there's less code and we avoid a rerender with `setState` in `componentDidMount()`.
+
+#### Rendering the Error Message Dynamically
+
+Let's make the error message render as the user types.
+
+All it takes is this line of code after the label and before the button:
+
+```
+{error ? <div style={{color: 'red'}}>{error}</div> : null}
+```
+
+We render the error in red if it exists; else we render nothing.
+
+![The error message is rendered in red as the user types until a successful input is entered.](gifs/rendered errors.gif)
+
+#### TL;DR
+
+The key steps to make the submit button greyed out and to render the error messages are:
+
+1) Use the `onChange` prop on the input.
+
+2) Make a handler for the `onChange` prop that updates state.
+
+3) Use a ternary expression to conditionally render the error messages and a `Boolean()` function to check for errors to disable the submit button.
