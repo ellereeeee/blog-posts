@@ -146,3 +146,93 @@ This sort of makes an illusion that we are typing normally but we are actually u
 #### Synchronizing States
 
 The next step is to update the `multiline` state based on the `commaSeparated` state.
+
+We must add some things to `handleCommaSeparatedChange` to accomplish this.
+
+First, we'll pull out `value` from `event.target` and assign it to a `const`. Then we'll add the `multiline` state property to the current `setState` method. The `multiline` assignment looks like this: 
+
+```
+  multiline: value
+    .split(',')
+    .map(v => v.trim())
+    .filter(Boolean)
+    .join('\n')
+```
+
+This code splits typed in the `input` with a comma as the delimiter, trims each value of whitespace, filters out any empty strings, and then joins them together with a new line.  The result is that a list of things we've typed appears in the `textarea`.
+
+Here is the updated code:
+
+```
+  handleCommaSeparatedChange = event => {
+    const { value } = event.target
+    this.setState({
+      commaSeparated: value,
+      multiline: value
+        .split(',')
+        .map(v => v.trim())
+        .filter(Boolean)
+        .join('\n')
+    })
+  }
+```
+
+![Typing in the input also updates the textarea.](gifs/input updates textarea.gif)
+
+If we type in the textarea nothing happens since the current handler for that doesn't update anything. Making `handleMultilineChange` update state will be the next step.
+
+The process is similar for making `handleCommaSeparatedChange`, except we invert `.split('\n')` and `.join(',')`.
+
+```
+  handleMultilineChange = event => {
+    const { value } = event.target
+    this.setState({
+      multiline: value,
+      commaSeparated: value
+        .split('\n')
+        .map(v => v.trim())
+        .filter(Boolean)
+        .join(',')
+    })
+  }
+```
+
+Now the `textarea` also updates the `input`.
+
+![The text area updates the input](gifs/textarea updates input.gif)
+
+The final step is to setup the handler for the `select`.
+
+A multiple `select` element is unique in that it takes an array for its value. Add the `multiple value` prop and assign it `multiSelect` to the `select` element like this: `multiple value={multiSelect}`. Also assign it to the `const`'s extracted from `state` at the beginning of the render method and initialize it in state by assigning it an empty array.
+
+Let's update `handleCommaSeparatedChange` to update `multiSelect` state. We need an array of the values we've typed to match up with the values in the `select` element, so we'll add this to the handler:
+
+```
+  const allVals = value
+    .split(',')
+    .map(v => v.trim())
+    .filter(Boolean)
+```
+
+We can refactor updating the multiline state in the same handler with:
+
+
+```
+  multiline: allVals
+    .join('\n'),
+```
+
+And then finally update `multiSelect` state by matching only the values that are in `availableOptions`.
+
+```
+  multiSelect: allVals.filter(v => MyFancyForm.availableOptions.includes(v))
+```
+
+![Typing in the input updates the select form](gifs/input updates select.gif)
+
+We'll do something similar for `handleMultilineChange` since it doesn't update `multiSelect` state yet.
+
+The code is the same, except we split the value by a newline when getting an array of the values. The `textarea` updates all states now.
+
+Finally we'll have to make `handleMultiSelectChange` update states.
+
