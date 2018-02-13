@@ -236,3 +236,40 @@ The code is the same, except we split the value by a newline when getting an arr
 
 Finally we'll have to make `handleMultiSelectChange` update states.
 
+If we log `{target: event.target}` in the handler and click on an option, we can see the property `selectedOptions`. If we log `event.target.selectedOptions` and click on an option, we can see the `option` logged to the console. Since `handleMultiSelectChange` doesn't update state yet the value of the empty array is rerendered with nothing and nothing is selected when we click on an option in the `select` element.
+
+To update `multiSelect` state, get all the option values first:
+
+```
+  const allVals = Array.from(event.target.selectedOptions).map(
+    o => o.value,
+  ))
+```
+
+Since we cannot map an HTML node list, we turn it into an array with `Array.from(...)`.
+
+Update the `state` like this in the handler:
+
+```
+  this.setState({
+    multiSelect: allVals,
+    multiline: allVals.join('\n'),
+    commaSeparated: allVals.join(',')
+  })
+```
+
+Now we can select options in the `select` element and all the `input`, `textarea`, and `select` handlers are synchronized to update each others' elements' state.
+
+![Clicking on the select element's options select the option and updates the input and textarea element](gifs/select and synchronization.gif)
+
+#### TL;DR
+
+To control the input values,
+
+1) Specify a `value` on the `input` and `textarea` props. Note in normal HTML the children of the `textarea` element would be the value. On a multiple select the value is an array.
+
+2) Use an `onChange` prop for each element to the event.
+
+3) Write a handler for each `onChange` prop to get the value from the event.
+
+4) Update the state with the `setState` method, which in turn will rerender the component with the new state assigned to the value.
