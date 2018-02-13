@@ -201,7 +201,7 @@ Now the `textarea` also updates the `input`.
 
 ![The text area updates the input](gifs/textarea updates input.gif)
 
-The final step is to setup the handler for the `select`.
+The last element to wire up is the `select` element.
 
 A multiple `select` element is unique in that it takes an array for its value. Add the `multiple value` prop and assign it `multiSelect` to the `select` element like this: `multiple value={multiSelect}`. Also assign it to the `const`'s extracted from `state` at the beginning of the render method and initialize it in state by assigning it an empty array.
 
