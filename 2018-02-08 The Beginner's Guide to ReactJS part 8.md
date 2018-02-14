@@ -131,7 +131,7 @@ We can update the value with `setState` in the handler:
   }
 ```
 
-![Now we can type in the input](gifs/now I can type.gif)
+![Now we can type in the input.](gifs/now I can type.gif)
 
 Let's re-examine what's happening:
 
@@ -199,7 +199,7 @@ The process is similar for making `handleCommaSeparatedChange`, except we invert
 
 Now the `textarea` also updates the `input`.
 
-![The text area updates the input](gifs/textarea updates input.gif)
+![The text area updates the input.](gifs/textarea updates input.gif)
 
 The last element to wire up is the `select` element.
 
@@ -228,7 +228,7 @@ And then finally update `multiSelect` state by matching only the values that are
   multiSelect: allVals.filter(v => MyFancyForm.availableOptions.includes(v))
 ```
 
-![Typing in the input updates the select form](gifs/input updates select.gif)
+![Typing in the input updates the select form.](gifs/input updates select.gif)
 
 We'll do something similar for `handleMultilineChange` since it doesn't update `multiSelect` state yet.
 
@@ -301,8 +301,6 @@ class App extends React.Component {
 ```
 
 It's a class with an array and a render method that maps out  each value of the array into its own div. The result is a list.
-
-![The list in the browser.](pictures/initial list.png)
 
 However, we get the error `Warning: Each child in an array or iterator should have a unique "key" prop.` in the console in the developer tools.
 
