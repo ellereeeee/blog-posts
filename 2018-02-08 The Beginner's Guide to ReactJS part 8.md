@@ -273,3 +273,126 @@ To control the input values,
 3) Write a handler for each `onChange` prop to get the value from the event.
 
 4) Update the state with the `setState` method, which in turn will rerender the component with the new state assigned to the value.
+
+### Use the key prop when Rendering a List with React
+
+This section will show how to use the `key` prop correctly when rendering a list in React.
+
+Our starting code looks like this:
+
+```
+class App extends React.Component {
+  static allItems = [
+    {id: 'a', value: 'apple'},
+    {id: 'o', value: 'orange'},
+    {id: 'g', value: 'grape'},
+    {id: 'p', value: 'pear'},
+  ]
+  render() {
+    return (
+      <div>
+        {App.allItems.map(item => (
+          <div>{item.value}</div>
+        ))}
+      </div>
+    )
+  }
+}
+```
+
+It's a class with an array and a render method that maps out  each value of the array into its own div. The result is a list.
+
+![The list in the browser.](pictures/initial list.png)
+
+However, we get the error `Warning: Each child in an array or iterator should have a unique "key" prop.` in the console in the developer tools.
+
+![The error in the console.](pictures/key prop error.png)
+
+Whenever a rerender occurs, React needs to know what items are added or removed from one array to another. In our example, React wants to know what items are added or removed when we build the list with the JSX map expression in our render method.
+
+The `key` prop in React serves as an id for a value in an array.
+
+We can use the `id` property for each item in the `allItems` array. Now the error doesn't appear in the console anymore and React can keep track of each node.
+
+#### Using the key prop when using inputs
+
+Using the `key` prop isn't that important in the example above, so let's examine a scenario where using `key` properly matters.
+
+This code below includes the `allItems` array except it adds state and event handlers to add or remove items from the state. It also renders an add items button. When the add button is clicked a remove button, state value, and an empty input is displayed for each item in the state.
+
+```
+class App extends React.Component {
+  static allItems = [
+    {id: 'a', value: 'apple'},
+    {id: 'o', value: 'orange'},
+    {id: 'g', value: 'grape'},
+    {id: 'p', value: 'pear'},
+  ]
+  state = {items: []}
+  addItem = () => {
+    this.setState(({items}) => ({
+      items: [
+        ...items,
+        App.allItems.find(
+          i => !items.includes(i),
+        ),
+      ],
+    }))
+  }
+  removeItem = item => {
+    this.setState(({items}) => ({
+      items: items.filter(i => i !== item),
+    }))
+  }
+  render() {
+    const {items} = this.state
+    return (
+      <div>
+        <button
+          disabled={
+            items.length >= App.allItems.length
+          }
+          onClick={this.addItem}
+        >
+          +
+        </button>
+        {items.map((i, index) => (
+          <div>
+            <button
+              onClick={() => this.removeItem(i)}
+            >
+              -
+            </button>
+            {i.value}:
+            <input />
+          </div>
+        ))}
+      </div>
+    )
+  }
+}
+```
+
+Since React can't keep track of each item without the `key` prop, inputs entered may not remain in their original inputs when items are moved.
+
+![Inputs are moved around without a key prop when items are removed.](gifs/items moved around.gif)
+
+Without the `key` prop, inputs are not properly associated with items. This is why it is good to have an id for each item in your data.
+
+Here we use the item id for the key prop like this: `key={i.id}`
+
+![Inputs are associated with items properly even when items are removed.](gifs/key prop used.gif)
+
+#### Using the key prop when using element focus
+
+We can also observe why keys are important with element focus. In the example below, there are three lists with randomly shuffled inputs. The first has no key, the second uses the index as the key, and the last one uses a proper id for the key.
+
+If we click on an input in the first two, we'll see the focus does not remain on the item we've clicked. It changes in the second one because the index of an array is not a proper identifier. It only works in the last example.
+
+![Testing the focus of some inputs from each list.](gifs/shuffle inputs.gif)
+
+Since this example is for illustrating the importance of the `key` prop I won't go into the code. If you want to look at it you can find it on [Kent C. Dodd's GitHub repository](https://github.com/eggheadio-projects/the-beginner-s-guide-to-reactjs/blob/master/16-rendering-an-array-in-react/index.html).
+
+#### TL;DR
+
+Use the `key` prop when rendering a list in React. It's good to use an id for items you're rendering; the index of an array is not a proper identifier.
