@@ -12,7 +12,7 @@ Below we have a form with an `input`, `textarea`, and `select` elements.
 
 Each element has its own `onChange` prop with a respective `onChange` handler. The code for everything looks like this:
 
-```
+```javascript
 class MyFancyForm extends React.Component {
   static availableOptions = [
     'apple',
@@ -105,8 +105,8 @@ Our goal will be to synchronize the state of all the forms. In other words, typi
 
 The first step is to introduce state in the class body:
 
-```
-state = {multiline: '', commaSeparated: ''}
+```javascript
+  state = {multiline: '', commaSeparated: ''}
 ```
 
 Notice we assign an empty string to each property. Next, add the value `multiline` to the `input` and the value `commaSeparated` to the `textarea`. For example: `value={multiline}`.
@@ -123,7 +123,7 @@ If we log the `event.target.value` in that handler, we'll see everything we type
 
 We can update the value with `setState` in the handler:
 
-```
+```javascript
  handleCommaSeparatedChange = event => {
     this.setState({
       commaSeparated: event.target.value
@@ -151,7 +151,7 @@ We must add some things to `handleCommaSeparatedChange` to accomplish this.
 
 First, we'll pull out `value` from `event.target` and assign it to a `const`. Then we'll add the `multiline` state property to the current `setState` method. The `multiline` assignment looks like this: 
 
-```
+```javascript
   multiline: value
     .split(',')
     .map(v => v.trim())
@@ -163,7 +163,7 @@ This code splits typed in the `input` with a comma as the delimiter, trims each 
 
 Here is the updated code:
 
-```
+```javascript
   handleCommaSeparatedChange = event => {
     const { value } = event.target
     this.setState({
@@ -183,7 +183,7 @@ If we type in the textarea nothing happens since the current handler for that do
 
 The process is similar for making `handleCommaSeparatedChange`, except we invert `.split('\n')` and `.join(',')`.
 
-```
+```javascript
   handleMultilineChange = event => {
     const { value } = event.target
     this.setState({
@@ -207,7 +207,7 @@ A multiple `select` element is unique in that it takes an array for its value. A
 
 Let's update `handleCommaSeparatedChange` to update `multiSelect` state. We need an array of the values we've typed to match up with the values in the `select` element, so we'll add this to the handler:
 
-```
+```javascript
   const allVals = value
     .split(',')
     .map(v => v.trim())
@@ -217,14 +217,14 @@ Let's update `handleCommaSeparatedChange` to update `multiSelect` state. We need
 We can refactor updating the multiline state in the same handler with:
 
 
-```
+```javascript
   multiline: allVals
     .join('\n'),
 ```
 
 And then finally update `multiSelect` state by matching only the values that are in `availableOptions`.
 
-```
+```javascript
   multiSelect: allVals.filter(v => MyFancyForm.availableOptions.includes(v))
 ```
 
@@ -240,7 +240,7 @@ If we log `{target: event.target}` in the handler and click on an option, we can
 
 To update `multiSelect` state, get all the option values first:
 
-```
+```javascript
   const allVals = Array.from(event.target.selectedOptions).map(
     o => o.value,
   ))
@@ -250,7 +250,7 @@ Since we cannot map an HTML node list, we turn it into an array with `Array.from
 
 Update the `state` like this in the handler:
 
-```
+```javascript
   this.setState({
     multiSelect: allVals,
     multiline: allVals.join('\n'),
@@ -280,7 +280,7 @@ This section will show how to use the `key` prop correctly when rendering a list
 
 Our starting code looks like this:
 
-```
+```javascript
 class App extends React.Component {
   static allItems = [
     {id: 'a', value: 'apple'},
@@ -318,7 +318,7 @@ Using the `key` prop isn't that important in the example above, so let's examine
 
 This code below includes the `allItems` array except it adds state and event handlers to add or remove items from the state. It also renders an add items button. When the add button is clicked a remove button, state value, and an empty input is displayed for each item in the state.
 
-```
+```javascript
 class App extends React.Component {
   static allItems = [
     {id: 'a', value: 'apple'},
