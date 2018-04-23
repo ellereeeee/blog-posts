@@ -42,7 +42,7 @@ function doSomething(a) {
   
   var b;
   
-  b = a + doSomething(a * 2);
+  b = a + doSomethingElse(a * 2);
   
   console.log(b * 3);
 }
