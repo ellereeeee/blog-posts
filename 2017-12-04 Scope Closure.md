@@ -47,7 +47,7 @@ function wait(message) {
 
 wait("Hello, closure!");
 ```
-We are executing `timer` outside of its scope, and `timer` can access the `message` variable because of its closure over `timer`.
+We are executing `timer` outside of its scope, and `timer` can access the `message` variable because of its closure over `wait`.
 
 Simpson says IIFEs aren't examples of closure because they are not executed outside of its own lexical scope, but it can be a common tool to create scope that can be closed over. IIFEs still create scope.
 
