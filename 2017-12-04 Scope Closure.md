@@ -139,7 +139,7 @@ There are two requirements for the module pattern:
 
 A module needs closure to be a module. A function with just function properties isn't a module since it would be closing over an empty scope.
 
-You can make only once instance of a module by making the enclosing function an IIFE.
+You can make only one instance of a module by making the enclosing function an IIFE.
 
 You can also give parameters to the enclosing function, and provide an argument for that parameter when you create an instance.
 
