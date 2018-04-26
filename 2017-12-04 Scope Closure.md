@@ -206,9 +206,9 @@ Simpson provides this simple proof of concept for illustration purposes. I've ad
 var MyModules = (function Manager() { // enclosing function invoked when assigned to `MyModules`
   var modules = {}; // private variables, where new modules are stored
   
-  function define(name, deps, impl) {
+  function define(name, deps, impl) { // the deps parameter contains the dependency names
     for (var i=0; i<deps.length; i++) {
-      deps[i] = modules[deps[i]];
+      deps[i] = modules[deps[i]]; // here we assign the actual reference of the dependencies from the modules object to a new dependencies list
     }
     modules[name] = impl.apply(impl, deps); // this is important! New modules are made here.
   }
