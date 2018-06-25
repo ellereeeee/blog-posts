@@ -132,3 +132,5 @@ I needed to use the second form of `setState` to update the state. Pass a functi
 4) Check the console for errors.
 
 I had a lot of fun coding my first React app and I hope you do too. Good luck!
+
+**edit**: Thank you Reddit user codethesite for helping me [refactor my handler assignment operators](https://www.reddit.com/r/reactjs/comments/8tinqo/lessons_learned_from_my_first_react_app/e18vqtw/)!
