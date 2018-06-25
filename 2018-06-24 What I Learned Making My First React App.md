@@ -1,4 +1,4 @@
-## What I Learned Making My First React App
+## Lessons learned from my first React app
 
 ![React Transition Group Animations](gifs/ReactTransitionGroupAnimationsSmall.gif)
 
@@ -111,10 +111,10 @@ to this:
 
 ```jsx
   handleIncrementTime = () =>
-    this.setState(prevState => ({ time: (prevState.time += 300000) }));
+    this.setState(prevState => ({ time: (prevState.time + 300000) }));
   handleDecrementTime = () => {
     if (this.state.time > 300000) {
-      this.setState(prevState => ({ time: (prevState.time -= 300000) }));
+      this.setState(prevState => ({ time: (prevState.time - 300000) }));
     }
   };
 ```
@@ -131,4 +131,4 @@ I needed to use the second form of `setState` to update the state. Pass a functi
 
 4) Check the console for errors.
 
-I had a lot of fun coding my first React app, and I hope you do too. Good luck!
+I had a lot of fun coding my first React app and I hope you do too. Good luck!
