@@ -1,6 +1,4 @@
-These are my notes on "`this` or That?," Kyle Simpson's [first chapter](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch1.md) of _You Don't Know Javascript: **this** and Object Prototypes_. 
-
-Since these are notes, I sometimes explain things in my own words or just copy from the text. I do whatever I think will best help me when I need to review these notes later.
+These are my notes on "`this` or That?," Kyle Simpson's [first chapter](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch1.md) of _You Don't Know Javascript: this and Object Prototypes_.
 
 ### What's `this`
 
@@ -46,7 +44,7 @@ function speak(context) {
 }
 
 identify( you ); // READER
-speak( me ); // Hello, I'm KYLE
+speak( me ); // Hello, I'm RICHARD
 ```
 
 The more complex your usage pattern is, the more clearly you'll see that passing around explicit references (also called context) as an explicit parameter is often messier than passing around a `this` context.
@@ -55,7 +53,7 @@ The more complex your usage pattern is, the more clearly you'll see that passing
 
 Developers often incorrectly assume two different meanings of `this`.
 
-The first is to the function itself.
+**The first incorrect assumption is that `this` refers to the function itself.**
 
 Consider this code:
 
@@ -87,7 +85,7 @@ console.log( foo.count ); // 0 -- WTF?
 
 In this situation, `count` is actually created in the global scope with the value of `NaN`. We will explore why in chapter 2.
 
-It's possible to solve the issue by relying on lexical scope. You could have a reference to the function object with a variable (lexical identifier) that points to it.
+It's possible to solve the issue by relying on lexical scope. You could have a reference to the function object with a lexical identifier (variable) that points to it.
 
 For example,
 
@@ -97,8 +95,7 @@ function foo() {
 }
 ```
 
-While this solves the problem, Simpson says people often use this to avoid understanding of `this`. Using the `.call()` method let's us properly use `this`.
-
+While this solves the problem, people often rely on lexical scope to avoid understanding of `this`. Using the `.call()` method let's us properly use `this`.
 
 ```javascript
 function foo(num) {
@@ -130,7 +127,7 @@ for (i=0; i<10; i++) {
 console.log( foo.count ); // 4
 ```
 
-The second assumption people make is that `this` refers to function scope.
+**The second assumption people make is that `this` refers to function scope.**
 
 Take a look at this code:
 
