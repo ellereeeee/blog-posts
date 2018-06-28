@@ -1,3 +1,5 @@
+![A finger pointing.](pictures/thisOrThat.jpg)
+
 These are my notes on "`this` or That?," Kyle Simpson's [first chapter](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch1.md) of _You Don't Know Javascript: this and Object Prototypes_.
 
 ### What's `this`
