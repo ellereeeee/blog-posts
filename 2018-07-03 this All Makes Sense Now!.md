@@ -4,7 +4,7 @@ These are my notes on "`this` All Makes Sense Now!," Kyle Simpson's [second chap
 
 ### Call-site
 
-The **call-site** is the location in the code where a function is called (no where it's dclared).
+The **call-site** is the location in the code where a function is called (not where it's declared).
 
 The **call-stack** is the stack of functions that have been called to get us to the current moment in execution.
 
@@ -63,7 +63,7 @@ var obj1 = {
 obj1.obj2.foo(); // 42
 ```
 
-One common frustration with the `this` binding is when an _implicitly bound_ function loses tha binding and falls back to the _default binding_. For example:
+One common frustration with the `this` binding is when an _implicitly bound_ function loses that binding and falls back to the _default binding_. For example:
 
 ```javascript
 function foo() {
@@ -82,7 +82,7 @@ var a = "oops, global"; // `a` also property on global object
 bar(); // "oops, global"
 ```
 
-The key thing to remember is that **`obj.foo` is a reference to the `foo` function.** Assigning `obj.foo` to `bar` is just assigning the `foo` function reference to `bar`. `foo`'s implicit binding to `obj` is lost and thus the global value `a` is logged to the console.
+The key thing to remember is that **`obj.foo` is a reference to the `foo` function.** Assigning `obj.foo` to `bar` is just assigning the `foo` function reference to `bar`. `foo`'s implicit binding to `obj` is lost and thus the global property `a` is logged to the console.
 
 This also happens often when passing a callback function. If we had:
 
@@ -110,7 +110,7 @@ One common real world example of an implicitly lost binding is in the ReactJS fr
 
 ##### Explicit Binding
 
-You can directly state what you want your `this` to be with the `call(..)` and `apply(..)` methods. They takes an object to use for the `this` in the first parameter then invoke the function with that `this` specific. This is called _explicit binding_.
+You can directly state what you want your `this` to be with the `call(..)` and `apply(..)` methods. They take an object to use for the `this` in the first parameter then invoke the function with that `this` specified. This is called _explicit binding_.
 
 For example:
 
@@ -172,7 +172,7 @@ console.log( b ); // 5
 
 ##### `new` Binding
 
-In JS, constructors are **just functions** that happen to be called with the `new` operator in front of them. They are not attached to classes, they do not instantiate a class, and they are not special types of functions. They are regular functions that are hijacked by the use of `new` in their invocation. Any functions can called with `new` in front of it, making it a _constructor call_.
+In JS, constructors are **just functions** that happen to be called with the `new` operator in front of them. They are not attached to classes, they do not instantiate a class, and they are not special types of functions. They are regular functions that are hijacked by the use of `new` in their invocation. Any functions can be called with `new` in front of it, making it a _constructor call_.
 
 When a function is invoked with `new` in front of it the following things are done automatically:
 
@@ -198,3 +198,81 @@ console.log( bar.a ); // 2
 Running `bar;` in the console will show `Object { a: 2 }`.
 
 ### Everything In Order
+
+These are the rules for determining `this` by order of precedence.
+
+1.If the function is called with `new` (**new binding**), `this` is the newly constructed object.
+
+```javascript
+var bar = new foo()
+```
+
+2.If the function is called with `call` or `apply` (**explicit binding**), even inside a `bind` _hard binding_, `this` is the explicitly specified object.
+
+```javascript
+var bar = foo.call( obj2 )
+```
+
+3.If the function is called with an "owning" or containing (context) object, `this` is that context object.
+
+```javascript
+var bar = obj1.foo()
+```
+
+4.If none of the above apply `this` is the `global` object or `undefined` in strict mode (**default binding**).
+
+```javascript
+var bar = foo()
+```
+
+### Binding Exceptions
+
+If you pass `null` or `undefined` as a `this` binding parameter to `call`, `apply`, or `bind` then the _default binding_ rule applies to the invocation.
+
+It's common to use `apply(..)` to spread out arrays of values as parameters to a function call. `bind(..)` can also be used to curry parameters. ES6 has the `...` spread operator which does the same without needing `apply(..)`, but `bind(..)` is still necessary for currying.
+
+One way to avoid accidentally changing the `global` object with the _default binding_ rule is to use an empty placeholder object like `ø = Object.create(null)`.
+
+Be careful of "indirect references" to functions. When this happens, the _default binding_ rule applies. For example:
+
+```javascript
+function foo() {
+  console.log( this.a );
+}
+
+var a = 2;
+var o - { a: 3, foo: foo };
+var p = { a: 4 };
+
+o.foo(); // 3
+(p.foo = o.foo)(); // 2
+```
+
+`o.foo` is just a reference to function `foo` in the global scope, so the global variable `a` is logged to the console.
+
+### Lexical `this`
+
+Arrow-functions adopt the `this` binding from the enclosing (function or global) scope. For example:
+
+```javascript
+function foo() {
+  return (a) => {
+    console.log( this.a );
+  };
+}
+
+var obj1 = {
+  a: 2
+};
+
+var obj2 = {
+  a: 3
+};
+
+var bar = foo.call( obj1 );
+bar.call( obj2 ); // 2, not 3!
+```
+
+The arrow-function lexically captures whatever `foo()`s `this` is at its call-time. `bar` is `this`-bound to `obj1` since `foo()` was `this`-bound to `obj1` with `call(..)`. The lexical binding of an arrow-function cannot be overridden.
+
+A program can effectively use both lexical and `this` styles of code, but mixing the two mechanisms inside the same function makes for harder-to-maintain code.
