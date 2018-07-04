@@ -10,7 +10,7 @@ The **call-stack** is the stack of functions that have been called to get us to 
 
 When examining what `this` refers to, you must look at the call-site before the currently executing function. This can be found in the call-stack.
 
-You can visualize a call-stack in your mind as a chain of function calls in order. For example, 
+You can visualize a call-stack in your mind as a chain of function calls in order. For example: 
 
 ```javascript
 function baz() {
