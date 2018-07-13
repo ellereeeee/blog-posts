@@ -143,7 +143,7 @@ Kyle Simpson calls `Vehicle.drive.call( this )` an example of "explicit pseudo-p
 
 This style of code usually results in more complex, harder-to-read, and harder-to-maintain code because you have to create this manual and explicit linkage in every function that needs a polymorphic reference.
 
-Because mixins only copy references they are not the same as real duplication in classes.
+Mixins are not the same as real duplication in classes because mixins only copy references.
 
 #### Implicit Mixins
 
