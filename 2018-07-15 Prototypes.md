@@ -123,6 +123,8 @@ a.constructor === Foo; // true
 
 `a` created by `new Foo()` _seems_ to also have a property on it called `.constructor`. However, **"constructor" does not actually mean "was" constructed by."
 
+#### Mechanics
+
 The `.constructor` reference is actually _delegated_ to `Foo.prototype`, which happens to have a `.constructor` that points to `Foo`.
 
 If you create a new object and replace its default `.prototype` object reference, the new object will not get a new `.constructor` on it. For example:
