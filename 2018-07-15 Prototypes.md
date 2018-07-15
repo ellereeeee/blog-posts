@@ -145,3 +145,22 @@ Thus, `.constructor` is an unreliable and unsafe reference to rely upon in your 
 
 ### "(Prototypal) Inheritance"
 
+One way to link two objects' prototypes is with `Object.create`. For example, `Bar.prototype = Object.create( Foo.prototype )`. Now `Bar` can delegate behavior to `Foo`. This method is nice in that it doesn't have any side effects that could come from a constructor call (`new` with a function). One slight downside is that reassigning a prototype with `Object.create` throws the old prototype away.
+
+This means the `.constructor` property is thrown away from the old `.prototype`, so you woud have to manually "fix" it if you were to rely on `.constructor`.
+
+The ES6 `Object.setPrototypeOf(..)` utility lets you modify an existing prototype.
+
+```javascript
+// pre-ES6
+// throws away default existing `Bar.prototype`
+Bar.prototype = Object.create( Foo.prototype );
+
+// ES6+
+// modifies existing `Bar.prototype`
+Object.setProtypeOf( Bar.prototype, Foo.prototype );
+```
+
+#### Inspecting "Class" Relationships
+
+Inspecting an instance for its inheritance ancestry is often called _introspection_ or _reflection_ in traditional class-oriented environments. In JS, this would finding out what object a certain delegates to.
