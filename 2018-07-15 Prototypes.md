@@ -4,7 +4,7 @@ These are my notes on "Prototypes," Kyle Simpson's [fifth chapter](https://githu
 
 ### `[[Prototype]]`
 
-When attemtping a property access on an object that doesn't have that property, the object's internal `[[Property]]` linkage defines where the `[[Get]]` operation should look next. For example:
+When attempting a property access on an object that doesn't have that property, the object's internal `[[Property]]` linkage defines where the `[[Get]]` operation should look next. For example:
 
 ```javascript
 var anotherObject = {
@@ -29,7 +29,7 @@ All normal object objects have the built-in `Object.prototype` as the top of the
 
 #### Setting and Shadowing Properties
 
-Example the code `myObject.foo = "bar"`.
+Examine the code `myObject.foo = "bar"`.
 
 If `foo` already exists somewhere higher in the `[[Prototype]]` chain, surprising behavior can occur. If `foo` is on both `myObject` and somewhere higher on the prototype chain, the `foo` on `myObject` _shadows_ the `foo` higher in the chain. This is called _shadowing_. `myObject.foo` will find the `foo` that's lowest in the chain.
 
@@ -43,7 +43,7 @@ Here are three scenarios for `myObject.foo = "bar"` is `foo` is not on `myObject
 
 In cases #2 and #3 you can use `Object.defineProperty(..)` to add `foo` to `myObject`.
 
-Number 2 is trying to reinforce the illusion of class-inherited properties if you think of the `foo` an inherited copy to `myObject`. Such inheritance does not actually occur however.
+Number 2 is trying to reinforce the illusion of class-inherited properties if you think of the `foo` as an inherited copy to `myObject`. Such inheritance does not actually occur however.
 
 Be careful when dealing with delegated properties that you modify. You may accidentally create shadowing. For example:
 
@@ -68,7 +68,7 @@ myObject.a; // 3
 myObject.hasOwnProperty( "a" ); // true
 ```
 
-The `++` operation corresponds to `myObject.a = myObject.a + 1`, so `myObject.a` is created. In this situation `anotherObject.a++` would be proper.
+The `++` operation corresponds to `myObject.a = myObject.a + 1`, so `myObject.a` is created. If you want to increment `a`, `anotherObject.a++` would be proper.
 
 ### "Class"
 
@@ -121,7 +121,7 @@ var a = new Foo();
 a.constructor === Foo; // true
 ```
 
-`a` created by `new Foo()` _seems_ to also have a property on it called `.constructor`. However, **"constructor" does not actually mean "was" constructed by."
+`a` created by `new Foo()` _seems_ to also have a property on it called `.constructor`. However, **"constructor" does not actually mean "was constructed by."**
 
 #### Mechanics
 
@@ -163,9 +163,9 @@ Object.setProtypeOf( Bar.prototype, Foo.prototype );
 
 #### Inspecting "Class" Relationships
 
-Inspecting an instance for its inheritance ancestry is often called _introspection_ or _reflection_ in traditional class-oriented environments. In JS, this would finding out what object a certain delegates to.
+Inspecting an instance for its inheritance ancestry is often called _introspection_ or _reflection_ in traditional class-oriented environments. In JS, this would be finding out what object a certain delegates to.
 
-One way to do this is with he `instanceof` operator.
+One way to do this is with the `instanceof` operator.
 
 ```javascript
 function Foo() {
@@ -179,7 +179,7 @@ var a = new Foo();
 a instanceof Foo; // true
 ```
 
-`instanceof` takes a plain object as its left-hand operand and a function as its right-hand operand. `instanceof` searches the entire `[[Prototype]]` chain of the object on the left to see if the prototype of the function object ever appears.
+`instanceof` takes a plain object as its left-hand operand and a function as its right-hand operand. `instanceof` searches the entire `[[Prototype]]` chain of the object on the left to see if the prototype of the function object on the right ever appears.
 
 `.isPrototypeOf` does the same, but lets you test the existence of a prototype on another object (not a function object).
 
@@ -195,7 +195,7 @@ Object.getPrototypeOf( a ); // Object { blah: "...", … }
 Object.getPrototypeOf( a ) === Foo.prototype; // true
 ```
 
-You can also use `.__proto__`, which was standardized in ES6.  `.__proto__` retrieves the internal `[[Prototype]]` of an object as a reference, which is helpful if you want to directly inspect (or even traverse: `.__proto__.__proto__...)` the chain. `.__proto__` looks like a property but it's more to think of it as a getter/setter that exists on `Object`.
+You can also use `.__proto__`, which was standardized in ES6.  `.__proto__` retrieves the internal `[[Prototype]]` of an object as a reference, which is helpful if you want to directly inspect (or even traverse: `.__proto__.__proto__...)` the chain. `.__proto__` looks like a property but it's more appropriate to think of it as a getter/setter that exists on `Object`.
 
 **Generally you should not change the `[[Prototype]]` of an existing object.** It's best to treat object `[[Prototype]]` linkage as a read-only characteristic for ease of reading your code later.
 
@@ -205,7 +205,7 @@ The series of `[[Prototype]]` links between objects is called the "prototype cha
 
 #### Links As Fallbacks?
 
-Designing software where you intend for a developer to call `myObject.cool()` when the `cool()` method is not on `myObject` can be suprising to future developers who will maintain your software. You can design your software in such a less surprising way that still takes of advantage of `[[Prototype]]` linkage. For example:
+Designing software where you intend for a developer to call `myObject.cool()` when the `cool()` method is not on `myObject` can be suprising to future developers who will maintain your software. You can design your software in less surprising way that still takes of advantage of `[[Prototype]]` linkage. For example:
 
 ```javascript
 var anotherObject = {
