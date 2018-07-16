@@ -164,3 +164,61 @@ Object.setProtypeOf( Bar.prototype, Foo.prototype );
 #### Inspecting "Class" Relationships
 
 Inspecting an instance for its inheritance ancestry is often called _introspection_ or _reflection_ in traditional class-oriented environments. In JS, this would finding out what object a certain delegates to.
+
+One way to do this is with he `instanceof` operator.
+
+```javascript
+function Foo() {
+  // ...
+}
+
+Foo.prototype.blah = "...";
+
+var a = new Foo();
+
+a instanceof Foo; // true
+```
+
+`instanceof` takes a plain object as its left-hand operand and a function as its right-hand operand. `instanceof` searches the entire `[[Prototype]]` chain of the object on the left to see if the prototype of the function object ever appears.
+
+`.isPrototypeOf` does the same, but lets you test the existence of a prototype on another object (not a function object).
+
+```javascript
+Foo.prototype.isPrototypeOf( a ); // true
+```
+
+You can also directly retrieve the `[[Prototype]]` of an object. In ES6 this is done with `Object.getPrototype(..)`.
+
+```javascript
+Object.getPrototypeOf( a ); // Object { blah: "...", … }
+
+Object.getPrototypeOf( a ) === Foo.prototype; // true
+```
+
+You can also use `.__proto__`, which was standardized in ES6.  `.__proto__` retrieves the internal `[[Prototype]]` of an object as a reference, which is helpful if you want to directly inspect (or even traverse: `.__proto__.__proto__...)` the chain. `.__proto__` looks like a property but it's more to think of it as a getter/setter that exists on `Object`.
+
+**Generally you should not change the `[[Prototype]]` of an existing object.** It's best to treat object `[[Prototype]]` linkage as a read-only characteristic for ease of reading your code later.
+
+### Object Links
+
+The series of `[[Prototype]]` links between objects is called the "prototype chain."
+
+#### Links As Fallbacks?
+
+Designing software where you intend for a developer to call `myObject.cool()` when the `cool()` method is not on `myObject` can be suprising to future developers who will maintain your software. You can design your software in such a less surprising way that still takes of advantage of `[[Prototype]]` linkage. For example:
+
+```javascript
+var anotherObject = {
+  cool: function() {
+    console.log( "cool!" );
+  }
+};
+
+var myObject = Object.create( anotherObject );
+
+myObject.doCool = function() {
+  this.cool(); // internal delegation!
+};
+
+myObject.doCool(); // "cool!"
+```
