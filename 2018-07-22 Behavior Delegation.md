@@ -83,5 +83,5 @@ Rather than organizing objects in your mind vertically, with Parents flowing dow
 
 Delegation is more properly used as an internal implementation detail rather than exposed in your API design. For example, we hid the `.setID` delegation above in `XYZ.prepare(task)` rather than making the user call `XYZ.setID()`.
 
-### Mutual Delegation (Disallowed)
+#### Mutual Delegation (Disallowed)
 
