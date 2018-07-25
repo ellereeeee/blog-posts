@@ -230,4 +230,86 @@ The main thing to note are the explicit `this` bindings to fake "super" calls, o
 
 Using ES6's `class` and `super(..)` syntax can make this code look better but it is important to remember that its just syntactic sugar for the `[[Prototype]]` mechanism.
 
-### Delegation Widget Objects
+### Delegating Widget Objects
+
+Here is a simpler `Widget`/`Button` example with OLOO style delegation. Again, I've tried to include code most relevant to the discussion for brevity.
+
+```javascript
+var Widget = {
+  init: function(width,height) {
+    // ...
+  },
+  insert: function($where) {
+    // ...
+  }
+};
+
+var Button = Object.create( Widget );
+
+Button.setup = function(widgth,height,label){
+  // delegated call
+  this.init( width, height );
+  // ...
+}
+Button.build = function($where) {
+  this.insert( $where );
+  // ...
+};
+Button.onClick = function(evt) {
+  // ...
+}
+
+$( document ).ready( function(){
+  var $body = $( document.body );
+  
+  var btn1 = Object.create( Button );
+  btn1.setup( 125, 30, "Hello" );
+  
+  bt1.build( $body );
+} );
+```
+
+Note that we didn't share the same method name `render(..)` in both objects, but `insert(..)` and `(..build)`. Using different and more descriptive names helps avoid the ugliness of explicit `this` bindings to emulate a super call.
+
+Also, with class constructors, you generally do both construction and initialization in the same step. OLOO style code allows you to separate these steps which can be beneficial for certain situations.
+
+## Simpler Design
+
+OLOO can simplify your overall design. Imagine we need to code two controller objects, one for handling the login form of a web page and another for handling the authentication (communication) with the server.
+
+To accomplish this with a typical class design pattern, you would break up the base functionality in a class called `Controller` and then derive two child classes, `LoginController` and `AuthController`. Those two classes inherit from `Controller` and specialize some of those base behaviors.
+
+When coding the child classes, we migh need to use some _composition_ in addition to inheritance. Composition is when a class contains an instance of another class to attain a desire functionality. In our example it would look like:
+
+```javascript
+function AuthController(login) {
+  Controller.call( this );
+  // login will accept an instance of "LoginController" class
+  this.login = login;
+}
+
+// more code...
+
+var auth = new AuthController(
+  // passing in an LoginController instance into a new AuthController instance
+  new LoginController()
+);
+```
+
+This lets `AuthController` reference and invoke behavior on `LoginController` through the property `this.login`.
+
+### De-class-ified
+
+We only need the objects `LoginController` and `AuthController` in OLOO-style code. The parent `Controller` class is unnecessary because `AuthController` can delegate any behavior it needs to `LoginController`. Here are some results and benefits from this style of code:
+
+1. We only have two entitities (`LoginController` and `AuthController`) instead of three with class design.
+
+2. We don't need to instantiate our classes because they are already objects.
+
+3. There's no need for composition because delegation let's the two objects cooperate as needed.
+
+4. We don't need to use explicit `this` bindings to fake super calls. We use different, descriptive method names instead.
+
+Bottom line: We have the same capability but with a significantly simpler design.
+
+## Nicer Syntax
