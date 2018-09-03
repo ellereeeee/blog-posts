@@ -94,7 +94,7 @@ class Car inherits Vehicle {
 
 #### Polymorphism
 
-`Car` defines its own `drive()` method, which overrides the method of the same name it inherited from `Vehicle`. But car also references `inherited:drive()`, which means that `Car` can reference the original pre-overriden `drive()` it inherited.
+`Car` defines its own `drive()` method, which overrides the method of the same name it inherited from `Vehicle`. But `Car` also references `inherited:drive()`, which means that `Car` can reference the original pre-overriden `drive()` it inherited.
 
 This is polymorphism, or the idea that any method can reference another method at a higher level of the inheritance hierarchy. It is important to note that a child class is actually accessing behavior from the copy it received from the parent class. The child class does not access the parent class. **Class inheritance implies copies**.
 
@@ -122,11 +122,11 @@ The name "mixin" comes from the idea that you are "mixing in" the contents of a 
 
 #### Explicit Mixins
 
-The utility for copying behavior from a parent class to child class is often called `extend(..)`. Here we will call them `mixin(..)` for illustrative purposes.
+The utility for copying behavior from a parent class to a child class is often called `extend(..)`. Here we will call them `mixin(..)` for illustrative purposes.
 
-An explicit mixin function will take an source and target objects for parameters. It will check if the target project has the properties of the source object and if it doesnt it will "copy" it via `=` assignment.
+An explicit mixin function will take a source and target objects for parameters. It will check if the target object has the properties of the source object and if it doesn't it will "copy" it via `=` assignment.
 
-Polymorphism is achieved by calling the desired parent method in the context of the of the child class via `.call(this);`. For example:
+Polymorphism is achieved by calling the desired parent method in the context of the child class via `.call(this);`. For example:
 
 ```javascript
 var Car = mixin( Vehicle, {
@@ -143,7 +143,7 @@ Kyle Simpson calls `Vehicle.drive.call( this )` an example of "explicit pseudo-p
 
 This style of code usually results in more complex, harder-to-read, and harder-to-maintain code because you have to create this manual and explicit linkage in every function that needs a polymorphic reference.
 
-Mixins are not the same as real duplication in classes because mixins only copy references.
+Mixins are not the same as real duplication in classes because mixins only copy object/function references.
 
 #### Implicit Mixins
 
