@@ -33,7 +33,7 @@ Examine the code `myObject.foo = "bar"`.
 
 If `foo` already exists somewhere higher in the `[[Prototype]]` chain, surprising behavior can occur. If `foo` is on both `myObject` and somewhere higher on the prototype chain, the `foo` on `myObject` _shadows_ the `foo` higher in the chain. This is called _shadowing_. `myObject.foo` will find the `foo` that's lowest in the chain.
 
-Here are three scenarios for `myObject.foo = "bar"` is `foo` is not on `myObject` but is somewhere higher on `myObject`'s `[[Prototype]]` chain:
+Here are three scenarios for `myObject.foo = "bar"` if `foo` is not on `myObject` but is somewhere higher on `myObject`'s `[[Prototype]]` chain:
 
 1. If the `foo` higher in the chain is not `writable: false`, then `foo` is also added to `myObject`.
 
@@ -76,7 +76,7 @@ In JavaScript, objects define their own behavior.
 
 #### "Class" Functions
 
-All functions by default get a public, non-enumerable property called `property` which points at an arbitrary object.
+All functions by default get a public, non-enumerable property called `prototype` which points at an arbitrary object.
 
 ```javascript
 function Foo() {
@@ -158,12 +158,12 @@ Bar.prototype = Object.create( Foo.prototype );
 
 // ES6+
 // modifies existing `Bar.prototype`
-Object.setProtypeOf( Bar.prototype, Foo.prototype );
+Object.setProtoypeOf( Bar.prototype, Foo.prototype );
 ```
 
 #### Inspecting "Class" Relationships
 
-Inspecting an instance for its inheritance ancestry is often called _introspection_ or _reflection_ in traditional class-oriented environments. In JS, this would be finding out what object a certain delegates to.
+Inspecting an instance for its inheritance ancestry is often called _introspection_ or _reflection_ in traditional class-oriented environments. In JS, this would be finding out what object a certain object delegates to.
 
 One way to do this is with the `instanceof` operator.
 
