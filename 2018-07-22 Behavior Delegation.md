@@ -24,7 +24,7 @@ class Task {
 }
 
 class XYZ inherits Task {
-  label:
+  label;
   
   //constructor `XYZ()`
   XYZ(ID,Label) { super( ID ); label = Label; }
@@ -42,7 +42,7 @@ You can instantiate one or more copies of the `XYZ` child class and use those in
 
 Let's try to solve the same task (having things that do general and specialized behaviors) using behavior delegation in JS.
 
-First you define an object (neither a class nor a function) called `Task` that has concrete behavior which includes that various other tasks can delegate to. For each specific task ("XYZ", "ABC"), you define an object to hold that task-specific data/behavior. You link your task-specific objects to the `Task` utility object, allowing them to delegate to it when necessary. For example:
+First you define an object (neither a class nor a function) called `Task` that has concrete behavior that various other tasks can delegate to. For each specific task ("XYZ", "ABC"), you define an object to hold that task-specific data/behavior. You link your task-specific objects to the `Task` utility object, allowing them to delegate to it when necessary. For example:
 
 ```javascript
 var Task = {
@@ -63,13 +63,13 @@ XYZ.outputTaskDetails = function() {
   console.log( this.label );
 };
 
-// = Object.create( Task );
+// ABC = Object.create( Task );
 // ABC ... = ...
 ```
 
-`XYZ` is set up via `Object.create(..)` to `[[Prototype]]` delegate to the `Task` object. Kyle Simpson calls thies style of code "OLOO" (objects-linked-to-other-objects).
+`XYZ` is set up via `Object.create(..)` to `[[Prototype]]` delegate to the `Task` object. Kyle Simpson calls this style of code "OLOO" (objects-linked-to-other-objects).
 
-Here are some other diffrences to note with OLOO style code:
+Here are some other differences to note with OLOO style code:
 
 1. With `[[Prototype]]` delegation involved, you want state to be on the delegators (`XYZ`, `ABC`), not on the delegate (`Task`).
 
@@ -127,8 +127,8 @@ Bar.prototype.speak = function() {
 var b1 = new Bar( "b1" );
 var b2 = new Bar( "b2" );
 
-b1.speak;
-b2.speak;
+b1.speak();
+b2.speak();
 ```
 
 Parent class `Foo` inherits to child class `Bar` which is instantiated as `b1` and `b2`. `b1` and `b2` delegate to  `Bar.prototype` which delegates to `Foo.prototype`.
