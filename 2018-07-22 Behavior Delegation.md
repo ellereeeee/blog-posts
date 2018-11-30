@@ -85,7 +85,7 @@ Delegation is more properly used as an internal implementation detail rather tha
 
 #### Mutual Delegation (Disallowed)
 
-You cannot create a cycle were two or more objects are mutually delegated (bi-directionally) to each other. If you make `B` linked to `A`, and then try to link `A` to `B`, you will get an error. If you made a reference to a property/method which didn't exist in either place, you'd have an infinite recursion on the `[[Prototype]]` loop.
+You cannot create a cycle where two or more objects are mutually delegated (bi-directionally) to each other. If you make `B` linked to `A`, and then try to link `A` to `B`, you will get an error. If you made a reference to a property/method which didn't exist in either place, you'd have an infinite recursion on the `[[Prototype]]` loop.
 
 #### Debugged
 
@@ -160,7 +160,7 @@ b1.speak();
 b2.speak();
 ```
 
-The main takeaway from this code comparison is that we've greatly simplified our code by just using objects linked to each other. There is no need to use things like look (but don't behave) like classes, with constructors and prototypes and `new` calls.
+The main takeaway from this code comparison is that we've greatly simplified our code by just using objects linked to each other. There is no need to use things that look (but don't behave) like classes with constructors and prototypes and `new` calls.
 
 Let's examine mental models of the above code snippets.
 
@@ -168,13 +168,13 @@ Let's examine mental models of the above code snippets.
 
 This model just shows the relevant entities and relationships.
 
-Note how the dotted lines are depicting the implied relationships when you setup the "inheritance" between `Foo.prototype` and `Bar.prototype` and haven't yet fixed the missing `.constructor` property reference. Remember an object loses its own `.contsructor` property when you redefine the objects' prototype. Even without these dotted lines this model is still a lot to deal with.
+Note how the dotted lines are depicting the implied relationships when you setup the "inheritance" between `Foo.prototype` and `Bar.prototype` and haven't yet fixed the missing `.constructor` property reference. Remember an object loses its own `.constructor` property when you redefine the objects' prototype. Even without these dotted lines this model is still a lot to deal with.
 
 Compare this with a mental model for OLOO-style code.
 
 ![A mental model of OLOO style code.](pictures/OLOO%20style%20mental%20map.png)
 
-From a glance it's obvious that OLOO_style code has much less stuff to worry about, which results from just having objects linked to other objects.
+From a glance it's obvious that OLOO-style code has much less stuff to worry about, which results from just having objects linked to other objects.
 
 ### Classes vs. Objects
 
@@ -279,7 +279,7 @@ OLOO can simplify your overall design. Imagine we need to code two controller ob
 
 To accomplish this with a typical class design pattern, you would break up the base functionality in a class called `Controller` and then derive two child classes, `LoginController` and `AuthController`. Those two classes inherit from `Controller` and specialize some of those base behaviors.
 
-When coding the child classes, we migh need to use some _composition_ in addition to inheritance. Composition is when a class contains an instance of another class to attain a desire functionality. In our example it would look like:
+When coding the child classes, we might need to use some _composition_ in addition to inheritance. Composition is when a class contains an instance of another class to attain a desired functionality. In our example it would look like:
 
 ```javascript
 function AuthController(login) {
