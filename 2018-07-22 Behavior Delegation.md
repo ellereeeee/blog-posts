@@ -345,4 +345,47 @@ var Foo = {
   baz: function baz() { /*..*/ } // possible to self reference this because it is a _named function expression_
 }
 ```
+## Introspection
 
+_Type introspection_ is when you inspect an instance to find out what kind of object it is. The main goal is to find out the structure/capabilities of an object based on how it was created.
+
+The wording of `instanceof` sounds like it is inspecting the relationship between an instance and a class, but it actually shows if an object is prototype-linked to a _function_.
+
+Using `instanceof` with `.prototype` semantics can look ugly.
+
+```javascript
+function Foo() { /* .. */ }
+Foo.prototype...
+
+function Bar() { /* .. */ }
+Bar.prototype = Object.create( Foo.prototype );
+
+// `Bar instanceof Foo` will not work!
+Bar.prototype instanceof Foo; // true
+```
+
+"Duck typing" is another kind of introspection that comes from the saying "if it looks like a duck, and it quacks like a duck, it must be a duck." For example:
+
+```javascript
+if (a1.something) {
+  a1.something();
+}
+```
+
+Above we are just testing if `a1` can call `something()`, regardless of where `something()` is on the prototype chain.
+
+"Duck typing"  makes assumptions about the objects capabilities which introduces more risk into the introspection test. This is strongly apparent with ES6 Promises. "Duck typing" promises involves checking if the object has a `.then()` function on it. Any other kind of object with `.then()` can result in broken assumptions.
+
+`instanceof` and "duck typing" should only be used sparingly and in controlled conditions.
+
+_Type introspection_ is cleaner with OLOO-style coding. For example:
+
+```javascript
+var Foo = { /* .. */ };
+
+var Bar = Object.create( Foo );
+
+Foo.isPrototypeOf( Bar ); // true
+```
+
+We plainly ask if one object is a prototype of another. Verbose syntax like `Foo.prototype` and misleading syntax like `instanceof` are unnecessary.
