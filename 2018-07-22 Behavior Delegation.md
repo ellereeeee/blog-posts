@@ -313,3 +313,36 @@ We only need the objects `LoginController` and `AuthController` in OLOO-style co
 Bottom line: We have the same capability but with a significantly simpler design.
 
 ## Nicer Syntax
+
+OLOO-style code can look cleaner with ES6's concise method declarations. You don't need to use `function` in your declarations. For example:
+
+```javascript
+var LoginController = {
+  errors: [],
+  getUser() {
+    // No `function` keyword used.
+  }
+}
+```
+
+Linking objects to each other is also cleaner. You just declare the new object with an object literal then declare it with `Object.setPrototypeOf`. For example,
+
+```javascript
+Object.setPrototypeOf( AuthController, LoginController );
+```
+
+Now `AuthController` can delegate behavior to `LoginController`. This is much cleaner than using `Object.create(...)` then defining each new method like this: `AuthController.checkAuth = function() { //.. }`.
+
+### Unlexical
+
+In some cases you cannot self-reference functions with concise methods. For example, when the function is being shared in delegation across different objects, using `this` binding, etc.
+
+In these cases it's best to use a real self-reference.
+
+```javascript
+var Foo = {
+  bar() { /*..*/ }, // a concise method
+  baz: function baz() { /*..*/ } // possible to self reference this because it is a _named function expression_
+}
+```
+
